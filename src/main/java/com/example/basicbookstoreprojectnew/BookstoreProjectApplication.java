@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//Output to the screen of Book
 @SpringBootApplication
 public class BookstoreProjectApplication implements CommandLineRunner {
     private final BookService bookService;

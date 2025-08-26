@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+//Book-entity without getter,setters. Integrated Lombok-annotation
 @Entity
 @Table(name = "books")
 @Getter
