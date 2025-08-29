@@ -18,17 +18,17 @@ public class BookstoreProjectApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Book book = Book.builder()
-                .title("The Lord of the Rings")
-                .author("J.R.R. Tolkien")
-                .description("Novel about struggle of good against evil")
-                .isbn("568-345111000")
-                .price(Integer.valueOf(100))
-                .build();
+        Book book = new Book();
+        book.setTitle("The Lord of the Rings");
+        book.setAuthor("J.R.R. Tolkien");
+        book.setDescription("Novel about struggle of good against evil");
+        book.setIsbn("568-345111000");
+        book.setPrice(100);
 
 
         bookService.save(book);
-        bookService.findAll().forEach(a -> System.out.println(a.getTitle()));
+        bookService.findAll().forEach(System.out::println);
+
     }
 
     public static void main(String[] args) {

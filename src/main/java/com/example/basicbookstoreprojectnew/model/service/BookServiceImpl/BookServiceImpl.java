@@ -4,27 +4,26 @@ import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
 import com.example.basicbookstoreprojectnew.model.service.BookService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 //BookService realization
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
+    @Autowired
     private final BookRepository bookRepository;
-
-    public BookServiceImpl(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
 
 
     @Override
+    @Transactional
     public Book save(Book book) {
         return bookRepository.save(book);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Book> findAll() {
         return bookRepository.findAll();
     }

@@ -6,10 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 //Book-entity without getter,setters. Integrated Lombok-annotation
@@ -17,9 +14,6 @@ import lombok.Setter;
 @Table(name = "books")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +28,17 @@ public class Book {
     private Integer price;
     private String description;
     private String coverImage;
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", coverImage='" + coverImage + '\'' +
+                '}';
+    }
 }

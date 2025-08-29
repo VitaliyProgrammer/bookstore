@@ -1,10 +1,10 @@
 package com.example.basicbookstoreprojectnew.model.repository.impl;
 
+import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;
-import com.example.basicbookstoreprojectnew.model.Book;
 import org.springframework.stereotype.Repository;
 
 //BookRepository realization
