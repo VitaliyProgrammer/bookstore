@@ -1,7 +1,7 @@
-package com.example.basicbookstoreprojectnew.model.repository.impl;
+package com.example.basicbookstoreprojectnew.repository.impl;
 
 import com.example.basicbookstoreprojectnew.model.Book;
-import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
+import com.example.basicbookstoreprojectnew.repository.BookRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;

@@ -5,7 +5,7 @@ import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
 import com.example.basicbookstoreprojectnew.exception.EntityNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.BookMapper;
 import com.example.basicbookstoreprojectnew.model.Book;
-import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
+import com.example.basicbookstoreprojectnew.repository.BookRepository;
 import com.example.basicbookstoreprojectnew.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
