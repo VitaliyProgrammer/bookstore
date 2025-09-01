@@ -6,10 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
-//Book-entity without getter,setters. Integrated Lombok-annotation
 @Entity
 @Table(name = "books")
 @Getter
@@ -25,20 +25,20 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
     @Column(nullable = false)
-    private Integer price;
+    private BigDecimal price;
     private String description;
     private String coverImage;
 
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", price=" + price +
-                ", description='" + description + '\'' +
-                ", coverImage='" + coverImage + '\'' +
-                '}';
+        return "Book{"
+                + "id=" + id
+                + ", title='" + title + '\''
+                + ", author='" + author + '\''
+                + ", isbn='" + isbn + '\''
+                + ", price=" + price
+                + ", description='" + description + '\''
+                + ", coverImage='" + coverImage + '\''
+                + '}';
     }
 }
