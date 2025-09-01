@@ -1,4 +1,4 @@
-package com.example.basicbookstoreprojectnew.model.service;
+package com.example.basicbookstoreprojectnew.service;
 
 import com.example.basicbookstoreprojectnew.dto.BookDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
