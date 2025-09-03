@@ -3,6 +3,7 @@ package com.example.basicbookstoreprojectnew.model.service;
 import com.example.basicbookstoreprojectnew.model.Book;
 import java.util.List;
 
+
 public interface BookService {
     Book save(Book book);
 

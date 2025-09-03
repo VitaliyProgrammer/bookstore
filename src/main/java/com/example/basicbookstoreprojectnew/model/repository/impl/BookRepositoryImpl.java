@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.basicbookstoreprojectnew.model.Book;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public class BookRepositoryImpl implements BookRepository {
 
