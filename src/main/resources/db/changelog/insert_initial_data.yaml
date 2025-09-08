@@ -1,0 +1,26 @@
+databaseChangeLog:
+  -changeSet:
+    id: 1
+    author: "J.R.R. Tolkien"
+    changes:
+      -insert:
+        tableName: books
+        columns:
+          - column:
+              name: title
+              value: "The Lord of the Rings"
+          - column:
+              value: author
+              type: "J.R.R. Tolkien"
+          - column:
+              name: description
+              value: "Novel about struggle of good against evil"
+          - column:
+              name: isbn
+              value: "568-345111000"
+          - column:
+              name: price
+              valueNumeric: 100
+          - column:
+              name: deleted
+              valueBoolean: false

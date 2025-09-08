@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Table(name = "books")
 @Getter
@@ -34,4 +33,5 @@ public class Book {
     private Integer price;
     private String description;
     private String coverImage;
+    private boolean deleted = false;
 }
