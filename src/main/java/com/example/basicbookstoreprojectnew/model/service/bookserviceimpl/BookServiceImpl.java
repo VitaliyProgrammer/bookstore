@@ -1,5 +1,7 @@
 package com.example.basicbookstoreprojectnew.model.service.bookserviceimpl;
 
+import com.example.basicbookstoreprojectnew.dto.BookDto;
+import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
 import com.example.basicbookstoreprojectnew.mapper.BookMapper;
 import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
@@ -17,32 +19,40 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     @Override
-    public Book save(Book book) {
-        return bookRepository.save(book);
+    public BookDto save(CreateBookRequestDto createBookRequestDto) {
+        Book book = bookMapper.toEntity(createBookRequestDto);
+        Book saved = bookRepository.save(book);
+        return bookMapper.toDto(saved);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public List<BookDto> findAll() {
+        return bookRepository.findAll().stream()
+                .map(bookMapper::toDto)
+                .toList();
     }
 
     @Override
-    public Book getBookById(Long id) {
-        return bookRepository.findByIdAndDeletedFalse(id)
+    public BookDto findById(Long id) {
+        Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found! "));
+        return bookMapper.toDto(book);
     }
 
     @Override
-    public Book updateBook(Long id, Book updatedBook) {
-        Book book = getBookById(id);
-        bookMapper.updateBookFromDto(updatedBook, book);
-        return bookRepository.save(book);
+    public BookDto updateBook(Long id, CreateBookRequestDto createBookRequestDto) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found! "));
+        bookMapper.updateBookFromDto(createBookRequestDto, book);
+        Book updatedBook = bookRepository.save(book);
+        return bookMapper.toDto(updatedBook);
     }
 
     @Override
     public void deleteBook(Long id) {
-        Book book = getBookById(id);
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found! "));
         book.setDeleted(true);
         bookRepository.save(book);
     }

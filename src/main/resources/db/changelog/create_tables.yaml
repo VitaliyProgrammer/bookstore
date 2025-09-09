@@ -34,6 +34,7 @@ databaseChangeLog:
                 type: VARCHAR(50)
                 constraints:
                   nullable: false
+                  unique: true
             - column:
                 name: price
                 type: INT
