@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-deleted-column-to-books
+      author: vitaliy
+      changes:
+        - addColumn:
+            tableName: books
+            columns:
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+                  remarks: "Soft delete flag for book"
