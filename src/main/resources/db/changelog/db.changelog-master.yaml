@@ -3,7 +3,3 @@ databaseChangeLog:
       file: db/changelog/create_tables.yaml
   - include:
       file: db/changelog/insert_initial_data.yaml
-  - include:
-      file: db/changelog/add_deleted_column.yaml
-  - include:
-      file: db/changelog/rename-deleted-to-is-deleted.yaml
