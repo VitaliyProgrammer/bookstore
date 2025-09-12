@@ -9,12 +9,14 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "books")
 @Getter
 @Setter
 @SQLDelete(sql = "UPDATE books SET is_deleted = true WHERE id =?")
+@SQLRestriction("is_deleted = false")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
