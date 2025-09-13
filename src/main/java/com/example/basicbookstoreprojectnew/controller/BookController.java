@@ -1,0 +1,65 @@
+package com.example.basicbookstoreprojectnew.controller;
+
+import com.example.basicbookstoreprojectnew.dto.BookDto;
+import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
+import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
+import com.example.basicbookstoreprojectnew.mapper.BookMapper;
+import com.example.basicbookstoreprojectnew.model.service.BookService;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/books")
+@RequiredArgsConstructor
+public class BookController {
+    private final BookService bookService;
+    private final BookMapper bookMapper;
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookDto> getAllBooks() {
+        return bookService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public BookDto getBookById(@PathVariable Long id) {
+        return bookService.findById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public BookDto createBook(@RequestBody CreateBookRequestDto bookRequestDto) {
+        return bookService.save(bookRequestDto);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public BookDto updateBook(@PathVariable Long id,
+                              @RequestBody CreateBookRequestDto updatedBook) {
+        return bookService.updateBook(id, updatedBook);
+    }
+
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookService.search(searchParameters);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+    }
+}
+
