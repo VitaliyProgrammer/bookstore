@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\BookstoreProjectApplication.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\controller\BookController.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\dto\BookDto.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\dto\BookSearchParametersDto.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\dto\CreateBookRequestDto.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\mapper\BookMapper.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\Book.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\BookRepository.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\field\AuthorSpecificationProvider.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\field\PriceSpecificationProvider.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\field\TitleSpecificationProvider.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\impl\SpecificationBuilderImpl.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\impl\SpecificationProviderManagerImpl.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\specification\SpecificationBuilder.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\specification\SpecificationProvider.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\repository\specification\SpecificationProviderManager.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\service\BookService.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\main\java\com\example\basicbookstoreprojectnew\model\service\bookserviceimpl\BookServiceImpl.java">
+</file>
+<file name="C:\Users\ThinkPad\basic-bookstore-project-new\src\test\resources\application.properties">
+</file>
+</checkstyle>

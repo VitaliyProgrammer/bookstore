@@ -1,0 +1,21 @@
+#Mon Sep 15 20:24:10 MSK 2025
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\BookstoreProjectApplication.java=1757934747154
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\controller\\BookController.java=1757933750637
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\dto\\BookDto.java=1757934747155
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\dto\\BookSearchParametersDto.java=1757930866841
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\dto\\CreateBookRequestDto.java=1757936615221
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\mapper\\BookMapper.java=1757934747158
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\Book.java=1757934747159
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\BookRepository.java=1757950305571
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\field\\AuthorSpecificationProvider.java=1757930924701
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\field\\PriceSpecificationProvider.java=1757930924702
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\field\\TitleSpecificationProvider.java=1757930924704
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\impl\\SpecificationBuilderImpl.java=1757930975211
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\impl\\SpecificationProviderManagerImpl.java=1757930975213
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\specification\\SpecificationBuilder.java=1757930955349
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\specification\\SpecificationProvider.java=1757930955351
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\repository\\specification\\SpecificationProviderManager.java=1757930955353
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\service\\BookService.java=1757934747160
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\main\\java\\com\\example\\basicbookstoreprojectnew\\model\\service\\bookserviceimpl\\BookServiceImpl.java=1757934747162
+C\:\\Users\\ThinkPad\\basic-bookstore-project-new\\src\\test\\resources\\application.properties=1757934747176
+configuration*?=5CAC097E10773D78C13EB59A01D9EC15E067D872
