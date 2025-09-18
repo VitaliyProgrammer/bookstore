@@ -1,6 +1,7 @@
 package com.example.basicbookstoreprojectnew.controller;
 
 import com.example.basicbookstoreprojectnew.dto.BookDto;
+import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
 import com.example.basicbookstoreprojectnew.mapper.BookMapper;
 import com.example.basicbookstoreprojectnew.model.service.BookService;
@@ -49,10 +50,15 @@ public class BookController {
         return bookService.updateBook(id, updatedBook);
     }
 
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookService.search(searchParameters);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
 }
-
