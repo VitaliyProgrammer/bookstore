@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class PriceSpecificationProvider implements SpecificationProvider<Book> {
     @Override
     public String getKey() {
-        return "price";
+        return BookSpecificationKeys.PRICE;
     }
 
     public Specification<Book> getSpecification(String[] parameters) {
         return (root, query, criteriaBuilder) ->
-                root.get("price").in(Arrays.stream(parameters).toArray());
+                root.get(BookSpecificationKeys.PRICE).in(Arrays.stream(parameters).toArray());
     }
 }
