@@ -34,7 +34,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     ) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST);
 
         List<String> fieldsOrderDto =
                 Arrays.stream(CreateBookRequestDto.class.getDeclaredFields())
@@ -48,17 +47,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                     }
                     return Integer.MAX_VALUE;
                 }))
-
                 .map(this::getErrorMessage)
                 .toList();
 
         body.put("errors", errors);
 
-        return new ResponseEntity<>(body, headers, statusCode);
+        return new ResponseEntity<>(body, headers, HttpStatus.BAD_REQUEST);
     }
 
     private String getErrorMessage(ObjectError objectError) {
-
         return objectError.getDefaultMessage();
     }
 
@@ -66,7 +63,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     public ResponseEntity<Object> handleRuntimeException(RuntimeException runtimeException) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         body.put("error", runtimeException.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,7 +73,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
             EntityNotFoundException entityNotFoundException) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND.value());
         body.put("error", entityNotFoundException.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
@@ -88,7 +83,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
             BookAlreadyExistsException bookAlreadyExistsException) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.CONFLICT.value());
         body.put("error", bookAlreadyExistsException.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
