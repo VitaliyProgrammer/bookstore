@@ -40,18 +40,24 @@ public class BookController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get information for a single books",
+            description = "Get information for a one particular book for the id")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create a new book",
+            description = "Insert a new book information into DB")
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto bookRequestDto) {
         return bookService.save(bookRequestDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update book",
+            description = "Update already existing book for a new information")
     public BookDto updateBook(@PathVariable Long id,
                               @RequestBody CreateBookRequestDto updatedBook) {
         return bookService.updateBook(id, updatedBook);
@@ -59,14 +65,16 @@ public class BookController {
 
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Search information for all books",
-              description = "Search information for pagination and sort books")
+    @Operation(summary = "Search books for a certain criteria",
+            description = "Search books for a certain sighs using pagination and sorting")
     public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters, Pageable pageable) {
         return bookService.search(searchParameters, pageable);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete book",
+            description = "Delete certain book for an id from the DB")
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
