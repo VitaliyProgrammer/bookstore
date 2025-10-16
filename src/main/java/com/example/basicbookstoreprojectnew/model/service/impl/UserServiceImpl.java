@@ -40,9 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserRegistrationResponseDto findById(Long id) {
-        User user = userRepository.findById(id)
+        return userRepository.findById(id)
+                .map(userMapper::toDto)
                 .orElseThrow(() -> new RuntimeException("User with " + id + " not found!"));
-        return userMapper.toDto(user);
     }
 
     @Override

@@ -4,10 +4,8 @@ import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
 import com.example.basicbookstoreprojectnew.model.service.UserService;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +25,5 @@ public class AuthenticationController {
             @RequestBody @Valid UserRegistrationRequestDto request) {
 
         return userService.registration(request);
-    }
-
-    @GetMapping("/users")
-    @ResponseStatus(HttpStatus.OK)
-    public List<UserRegistrationResponseDto> getAllUsers() {
-        return userService.findAllUsers();
     }
 }

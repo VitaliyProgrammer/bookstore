@@ -1,11 +1,13 @@
 package com.example.basicbookstoreprojectnew.dto;
 
+import com.example.basicbookstoreprojectnew.validation.PasswordMatch;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
+@PasswordMatch
 public class UserRegistrationRequestDto {
 
     @Email
