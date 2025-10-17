@@ -25,7 +25,9 @@ public class SecurityAccessConfiguration {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/books", "/books/*").hasAnyRole("USER")
+
+                        .requestMatchers("/auth/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/books/**").hasAnyRole("USER")
                         .requestMatchers(HttpMethod.POST, "/books/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/books/**").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/books/**").hasAnyRole("ADMIN")
