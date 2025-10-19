@@ -60,7 +60,7 @@ public class BookController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update book",
             description = "Update already existing book for a new information")
     public BookDto updateBook(@PathVariable Long id,
@@ -70,7 +70,7 @@ public class BookController {
 
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Search books for a certain criteria",
             description = "Search books for a certain sighs using pagination and sorting")
     public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters, Pageable pageable) {
