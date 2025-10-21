@@ -4,7 +4,10 @@ import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
 import com.example.basicbookstoreprojectnew.exception.RegistrationException;
 import com.example.basicbookstoreprojectnew.mapper.UserMapper;
+import com.example.basicbookstoreprojectnew.model.Role;
+import com.example.basicbookstoreprojectnew.model.RoleName;
 import com.example.basicbookstoreprojectnew.model.User;
+import com.example.basicbookstoreprojectnew.model.repository.RoleRepository;
 import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.model.service.UserService;
 import java.util.List;
@@ -19,6 +22,8 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
+    private final RoleRepository roleRepository;
+
     @Override
     public UserRegistrationResponseDto registration(
             UserRegistrationRequestDto registrationDto) {
@@ -26,9 +31,19 @@ public class UserServiceImpl implements UserService {
             throw new RegistrationException("User with email: " + registrationDto.getEmail()
                     + " already exists!");
         }
+
         User user = userMapper.toModel(registrationDto);
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
-        return userMapper.toDto(userRepository.save(user));
+
+        user = userRepository.save(user);
+        Role userRole = roleRepository.findByRoleName(RoleName.USER)
+                .orElseThrow(() -> new RuntimeException("The USER role not found!: "));
+
+        user.getRoles().add(userRole);
+
+        user = userRepository.save(user);
+
+        return userMapper.toDto(user);
     }
 
     @Override

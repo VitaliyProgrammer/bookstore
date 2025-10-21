@@ -19,7 +19,13 @@ public class SecurityAccessConfiguration {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll().anyRequest().authenticated()
+                        .requestMatchers(
+                                "/auth/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
 

@@ -6,6 +6,10 @@ public class BookSpecificationKeys {
     public static final String PRICE = "price";
     public static final String TITLE = "title";
 
+    public static final String MIN_PRICE = "minPrice";
+
+    public static final String MAX_PRICE = "maxPrice";
+
     private BookSpecificationKeys() {
     }
 }

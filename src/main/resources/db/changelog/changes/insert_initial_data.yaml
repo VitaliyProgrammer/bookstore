@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
+      id: insert-book-lot-v2
       author: "J.R.R. Tolkien"
       changes:
         - insert:
