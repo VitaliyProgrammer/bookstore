@@ -11,3 +11,4 @@ public interface AuthenticationMapper {
     @Mapping(target = "token", source = "token")
     UserLoginResponseDto loginResponse(User user, String token);
 }
+

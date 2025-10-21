@@ -50,3 +50,4 @@ public class AuthenticationService {
         return authenticationMapper.loginResponse(user, token);
     }
 }
+

@@ -47,3 +47,4 @@ public class SecurityAccessConfiguration {
         return configuration.getAuthenticationManager();
     }
 }
+
