@@ -20,4 +20,3 @@ public class GlobalExceptionHandler extends
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 }
-
