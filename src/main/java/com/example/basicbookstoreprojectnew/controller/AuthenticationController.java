@@ -1,5 +1,7 @@
 package com.example.basicbookstoreprojectnew.controller;
 
+import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
+import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
 import com.example.basicbookstoreprojectnew.model.service.UserService;
@@ -26,4 +28,12 @@ public class AuthenticationController {
 
         return userService.registration(request);
     }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto request) {
+
+        return userService.login(request);
+    }
 }
+
