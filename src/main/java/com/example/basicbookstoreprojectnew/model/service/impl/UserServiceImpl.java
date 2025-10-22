@@ -5,7 +5,6 @@ import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
 import com.example.basicbookstoreprojectnew.exception.RegistrationException;
-import com.example.basicbookstoreprojectnew.mapper.AuthenticationMapper;
 import com.example.basicbookstoreprojectnew.mapper.UserMapper;
 import com.example.basicbookstoreprojectnew.model.Role;
 import com.example.basicbookstoreprojectnew.model.RoleName;
@@ -25,8 +24,6 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
-    private final AuthenticationMapper authenticationMapper;
     private final PasswordEncoder passwordEncoder;
 
     private final RoleRepository roleRepository;
@@ -72,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
         String token = jwtUtil.generateToken(user.getEmail(), roles);
 
-        return authenticationMapper.loginResponse(user, token);
+        return new UserLoginResponseDto(token);
     }
 
     @Override

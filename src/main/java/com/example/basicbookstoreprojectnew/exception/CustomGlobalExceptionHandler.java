@@ -50,7 +50,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                 .toList();
 
         body.put("errors", errors);
-        body.put("status", HttpStatus.BAD_REQUEST.value());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
@@ -66,7 +65,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("error", runtimeException.getMessage());
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
@@ -78,7 +76,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("error", entityNotFoundException.getMessage());
-        body.put("status", HttpStatus.NOT_FOUND.value());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
@@ -90,7 +87,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("error", bookAlreadyExistsException.getMessage());
-        body.put("status", HttpStatus.CONFLICT.value());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
@@ -101,7 +97,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("error", jwtException.getMessage());
-        body.put("status", HttpStatus.UNAUTHORIZED.value());
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
     }

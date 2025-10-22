@@ -2,7 +2,6 @@ package com.example.basicbookstoreprojectnew.model.service;
 
 import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
-import com.example.basicbookstoreprojectnew.mapper.AuthenticationMapper;
 import com.example.basicbookstoreprojectnew.model.User;
 import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
-    private final AuthenticationMapper authenticationMapper;
 
     private final UserRepository userRepository;
 
@@ -47,7 +45,7 @@ public class AuthenticationService {
 
         String token = jwtUtil.generateToken(request.email(), roles);
 
-        return authenticationMapper.loginResponse(user, token);
+        return new UserLoginResponseDto(token);
     }
 }
 
