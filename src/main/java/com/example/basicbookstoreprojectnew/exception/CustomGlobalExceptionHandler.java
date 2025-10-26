@@ -4,6 +4,7 @@ import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
 import jakarta.persistence.EntityNotFoundException;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -24,6 +25,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private static final DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd 'T' HH:mm:ss");
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
@@ -32,7 +36,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
             WebRequest request
     ) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().format(formatter));
 
         List<String> fieldsOrderDto =
                 Arrays.stream(CreateBookRequestDto.class.getDeclaredFields())
@@ -63,7 +67,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
             RuntimeException runtimeException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().format(formatter));
         body.put("error", runtimeException.getMessage());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
@@ -74,7 +78,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
             EntityNotFoundException entityNotFoundException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().format(formatter));
         body.put("error", entityNotFoundException.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
@@ -85,7 +89,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
             BookAlreadyExistsException bookAlreadyExistsException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().format(formatter));
         body.put("error", bookAlreadyExistsException.getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
@@ -95,9 +99,20 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     public ResponseEntity<Object> handleJwtIsValidOrNotExists(JwtException jwtException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().format(formatter));
         body.put("error", jwtException.getMessage());
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+    }
+
+    @ExceptionHandler(CategoryAlreadyExistsException.class)
+    public ResponseEntity<Object> handleCategoryAlreadyExists(
+            CategoryAlreadyExistsException categoryException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", categoryException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 }
