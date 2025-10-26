@@ -35,7 +35,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get information for all books",
-            description = "Support pagination, sorting and filtering for books: ")
+            description = "Support pagination, sorting and filtering for books")
     public Page<BookDto> getAllBooks(Pageable pageable) {
         return bookService.findAll(pageable);
     }
