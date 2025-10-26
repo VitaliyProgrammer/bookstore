@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 public record CreateBookRequestDto(
         @NotBlank(message = "{title.notBlank}")
@@ -25,6 +26,10 @@ public record CreateBookRequestDto(
         @Digits(integer = 8, fraction = 2, message = "{price.digits}")
         BigDecimal price,
         @Pattern(regexp = "^(http|https)://.*$", message = "{coverImage.pattern}")
-        String coverImage
+        String coverImage,
+
+        @NotNull(message = "{category.notBlank}")
+        @Size(min = 1, message = "{category.pattern}")
+        List<Long> categoryIds
 ) {
 }
