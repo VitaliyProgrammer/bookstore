@@ -43,4 +43,3 @@ databaseChangeLog:
             referencedColumnNames: id
             constraintName: fk_cartItem_book
             onDelete: RESTRICT
-
