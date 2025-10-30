@@ -84,6 +84,17 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
 
+    @ExceptionHandler(ShoppingCartNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleEntityNotFoundException(
+            ShoppingCartNotFoundException shoppingCartNotFoundException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", shoppingCartNotFoundException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
     @ExceptionHandler(BookAlreadyExistsException.class)
     public ResponseEntity<Object> handleBookAlreadyExists(
             BookAlreadyExistsException bookAlreadyExistsException) {
