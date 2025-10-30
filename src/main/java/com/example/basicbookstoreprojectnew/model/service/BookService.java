@@ -1,6 +1,7 @@
 package com.example.basicbookstoreprojectnew.model.service;
 
 import com.example.basicbookstoreprojectnew.dto.BookDto;
+import com.example.basicbookstoreprojectnew.dto.BookDtoCategoryResponse;
 import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,8 @@ public interface BookService {
     BookDto updateBook(Long id, CreateBookRequestDto createBookRequestDto);
 
     Page<BookDto> search(BookSearchParametersDto parametersDto, Pageable pageable);
+
+    Page<BookDtoCategoryResponse> findAllBooksByCategoryId(Long categoryId, Pageable pageable);
 
     void deleteBook(Long id);
 }
