@@ -1,15 +1,13 @@
 package com.example.basicbookstoreprojectnew.dto;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-public record BookDto(
+public record BookDtoCategoryResponse(
         Long id,
         String title,
         String author,
         String description,
         String isbn,
         BigDecimal price,
-        String coverImage,
-        List<Long> categoryIds
+        String coverImage
 ) {}
