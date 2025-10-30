@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-default-roles-v2
+      author: vitaliy
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: role_name
+                  value: ADMIN
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: role_name
+                  value: USER
