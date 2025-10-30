@@ -1,4 +1,3 @@
-
 package com.example.basicbookstoreprojectnew.configuration;
 
 import org.springframework.context.annotation.Bean;
