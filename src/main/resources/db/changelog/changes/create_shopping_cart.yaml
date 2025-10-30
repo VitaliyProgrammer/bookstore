@@ -26,4 +26,3 @@ databaseChangeLog:
             referencedColumnNames: id
             onDelete: CASCADE
             constraintName: fk_shopping_cart_user
-
