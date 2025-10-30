@@ -8,13 +8,16 @@ import com.example.basicbookstoreprojectnew.exception.RegistrationException;
 import com.example.basicbookstoreprojectnew.mapper.UserMapper;
 import com.example.basicbookstoreprojectnew.model.Role;
 import com.example.basicbookstoreprojectnew.model.RoleName;
+import com.example.basicbookstoreprojectnew.model.ShoppingCart;
 import com.example.basicbookstoreprojectnew.model.User;
 import com.example.basicbookstoreprojectnew.model.repository.RoleRepository;
+import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
 import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.model.service.UserService;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final RoleRepository roleRepository;
+
+    private final ShoppingCartRepository shoppingCartRepository;
 
     private final JwtUtil jwtUtil;
 
@@ -49,6 +54,10 @@ public class UserServiceImpl implements UserService {
 
         user = userRepository.save(user);
 
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUser(user);
+        shoppingCartRepository.save(shoppingCart);
+
         return userMapper.toDto(user);
     }
 
@@ -70,6 +79,11 @@ public class UserServiceImpl implements UserService {
         String token = jwtUtil.generateToken(user.getEmail(), roles);
 
         return new UserLoginResponseDto(token);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override

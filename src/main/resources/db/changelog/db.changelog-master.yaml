@@ -2,12 +2,19 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/create_tables.yaml
   - include:
+      file: db/changelog/changes/create_category.yaml
+  - include:
       file: db/changelog/changes/roles.yaml
   - include:
       file: db/changelog/changes/users_roles.yaml
+  - include:
+      file: db/changelog/changes/create_cart_item.yaml
+  - include:
+      file: db/changelog/changes/create_shopping_cart.yaml
   - include:
       file: db/changelog/changes/insert_initial_data.yaml
   - include:
       file: db/changelog/changes/insert_default_roles.yaml
   - include:
       file: db/changelog/changes/insert_roles_for_users.yaml
+
