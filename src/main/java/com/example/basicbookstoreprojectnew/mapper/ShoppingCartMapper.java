@@ -11,3 +11,4 @@ public interface ShoppingCartMapper {
     @Mapping(target = "userId", source = "user.id")
     ShoppingCartResponseDto toDto(ShoppingCart shoppingCart);
 }
+

@@ -7,3 +7,4 @@ public record ShoppingCartResponseDto(
         Long userId,
         List<CartItemResponseDto> cartItems
 ) {}
+

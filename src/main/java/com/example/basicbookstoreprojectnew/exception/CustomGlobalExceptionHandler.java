@@ -127,3 +127,4 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 }
+
