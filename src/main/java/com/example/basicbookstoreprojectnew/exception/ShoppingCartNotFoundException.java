@@ -6,4 +6,3 @@ public class ShoppingCartNotFoundException extends RuntimeException {
         super(message);
     }
 }
-
