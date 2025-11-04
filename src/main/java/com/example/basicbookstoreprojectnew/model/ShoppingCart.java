@@ -33,3 +33,4 @@ public class ShoppingCart {
             orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CartItem> cartItems = new ArrayList<>();
 }
+

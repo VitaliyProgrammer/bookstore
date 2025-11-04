@@ -6,3 +6,4 @@ public record UpdateCartItemRequestDto(
         @Min(value = 1, message = "{quantity.minValue}")
         int quantity
 ) {}
+
