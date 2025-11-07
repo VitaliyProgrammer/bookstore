@@ -63,7 +63,6 @@ public class CategoryController {
         return bookService.findAllBooksByCategoryId(id, pageable);
     }
 
-    //////
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")

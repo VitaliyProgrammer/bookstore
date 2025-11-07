@@ -6,3 +6,4 @@ public record CartItemResponseDto(
         String bookTitle,
         int quantity
 ) {}
+

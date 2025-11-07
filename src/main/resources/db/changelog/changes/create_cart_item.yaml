@@ -4,7 +4,7 @@ databaseChangeLog:
       author: vitaliy
       changes:
         - createTable:
-            tableName: cart_item
+            tableName: cart_items
             columns:
               - column:
                   name: id
@@ -30,16 +30,16 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
-            baseTableName: cart_item
+            baseTableName: cart_items
             baseColumnNames: shopping_cart_id
-            referencedTableName: shopping_cart
+            referencedTableName: shopping_carts
             referencedColumnNames: id
             constraintName: fk_cartItem_shopping_cart
             onDelete: CASCADE
         - addForeignKeyConstraint:
-            baseTableName: cart_item
+            baseTableName: cart_items
             baseColumnNames: book_id
-            referencedTableName: book
+            referencedTableName: books
             referencedColumnNames: id
             constraintName: fk_cartItem_book
             onDelete: RESTRICT

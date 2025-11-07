@@ -4,7 +4,7 @@ databaseChangeLog:
       author: vitaliy
       changes:
         - createTable:
-            tableName: shopping_cart
+            tableName: shopping_carts
             columns:
               - column:
                   name: id
@@ -20,10 +20,9 @@ databaseChangeLog:
                     nullable: false
                     unique: true
         - addForeignKeyConstraint:
-            baseTableName: shopping_cart
+            baseTableName: shopping_carts
             baseColumnNames: user_id
-            referencedTableName: user
+            referencedTableName: users
             referencedColumnNames: id
             onDelete: CASCADE
             constraintName: fk_shopping_cart_user
-

@@ -3,19 +3,34 @@ databaseChangeLog:
       id: create-users-roles-table
       author: vitaliy
       changes:
-      - createTable:
-          tableName: users_roles
-          columns:
-            - column:
-                name: user_id
-                type: BIGINT
-                constraints:
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
                     nullable: false
-            - column:
-                name: role_id
-                type: BIGINT
-                constraints:
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
                     nullable: false
-      - addPrimaryKey:
-          tableName: users_roles
-          columnNames: user_id, role_id
+        - addPrimaryKey:
+            columnNames: user_id, role_id
+            tableName: users_roles
+            constraintName: pk_users_roles
+        - addForeignKeyConstraint:
+            baseTableName: users_roles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            constraintName: fk_users_roles_user
+        - addForeignKeyConstraint:
+            baseTableName: users_roles
+            baseColumnNames: role_id
+            referencedTableName: roles
+            referencedColumnNames: id
+            onDelete: CASCADE
+            constraintName: fk_users_roles_role
