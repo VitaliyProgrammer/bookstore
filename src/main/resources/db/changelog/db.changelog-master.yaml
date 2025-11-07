@@ -17,3 +17,8 @@ databaseChangeLog:
       file: db/changelog/changes/users_roles.yaml
   - include:
       file: db/changelog/changes/insert_default_roles.yaml
+  - include:
+      file: db/changelog/changes/create_orders.yaml
+  - include:
+      file: db/changelog/changes/create_order_items.yaml
+
