@@ -4,12 +4,10 @@ import com.example.basicbookstoreprojectnew.dto.OrderItemResponseDto;
 import com.example.basicbookstoreprojectnew.dto.OrderRequestDto;
 import com.example.basicbookstoreprojectnew.dto.OrderResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UpdateOrderStatusRequestDto;
-import com.example.basicbookstoreprojectnew.model.Order;
 import com.example.basicbookstoreprojectnew.model.User;
 import com.example.basicbookstoreprojectnew.model.service.OrderItemService;
 import com.example.basicbookstoreprojectnew.model.service.OrderService;
 import com.example.basicbookstoreprojectnew.security.AuthenticationUtil;
-import com.example.basicbookstoreprojectnew.validation.AccessValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -70,10 +68,7 @@ public class OrderController {
 
         User user = authenticationUtil.getCurrentUser(authentication);
 
-        Order order = orderService.getOrderById(orderId);
-
-        AccessValidator.validateOwnership(order.getUser().getId(), user.getId(), "order");
-        return orderItemService.getOrderItemsByOrderId(orderId);
+        return orderItemService.getOrderItemsByOrderId(user, orderId);
     }
 
     @GetMapping("/{orderId}/items/{itemId}")
@@ -82,10 +77,11 @@ public class OrderController {
     @Operation(summary = "Get specific order item",
             description = "Get one item from a specific order(for a current user)")
     public OrderItemResponseDto getOrderItem(
-            @PathVariable Long itemId, @PathVariable Long orderId, Authentication authentication) {
+            @PathVariable Long orderId,
+            @PathVariable Long itemId, Authentication authentication) {
 
         User user = authenticationUtil.getCurrentUser(authentication);
-        return orderItemService.getOrderItemById(orderId, itemId, user.getId());
+        return orderItemService.getOrderItemById(user, orderId, itemId);
     }
 
     @PatchMapping("/{id}")
@@ -93,10 +89,12 @@ public class OrderController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update user's orders",
             description = "Allows admin to update order status or shipping address")
-    public OrderResponseDto updateOrder(
-            @PathVariable Long id, @RequestBody @Valid UpdateOrderStatusRequestDto request) {
+    public OrderResponseDto updateOrder(Authentication authentication,
+                                        @PathVariable Long id,
+                                        @RequestBody @Valid UpdateOrderStatusRequestDto request) {
 
-        return orderService.updateOrderStatus(id, request);
+        User user = authenticationUtil.getCurrentUser(authentication);
+
+        return orderService.updateOrderStatus(user, id, request);
     }
 }
-

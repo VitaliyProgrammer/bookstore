@@ -1,15 +1,16 @@
 package com.example.basicbookstoreprojectnew.model.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.OrderItemResponseDto;
-import com.example.basicbookstoreprojectnew.exception.ForbiddenActionException;
 import com.example.basicbookstoreprojectnew.exception.OrderItemNotFoundException;
 import com.example.basicbookstoreprojectnew.exception.OrderNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.OrderItemMapper;
 import com.example.basicbookstoreprojectnew.model.Order;
 import com.example.basicbookstoreprojectnew.model.OrderItem;
+import com.example.basicbookstoreprojectnew.model.User;
 import com.example.basicbookstoreprojectnew.model.repository.OrderItemRepository;
 import com.example.basicbookstoreprojectnew.model.repository.OrderRepository;
 import com.example.basicbookstoreprojectnew.model.service.OrderItemService;
+import com.example.basicbookstoreprojectnew.validation.AccessValidator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Service;
 public class OrderItemServiceImpl implements OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
-
     private final OrderRepository orderRepository;
     private final OrderItemMapper orderItemMapper;
 
@@ -35,11 +35,13 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public List<OrderItemResponseDto> getOrderItemsByOrderId(Long orderId) {
+    public List<OrderItemResponseDto> getOrderItemsByOrderId(User user, Long orderId) {
 
-        if (!orderItemRepository.existsById(orderId)) {
-            throw new OrderNotFoundException("Order not found with id: " + orderId);
-        }
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(
+                        "Order not found with id: " + orderId));
+
+        AccessValidator.validateOwnership(user, orderId);
 
         List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
 
@@ -53,15 +55,13 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public OrderItemResponseDto getOrderItemById(Long orderId, Long orderItemId, Long userId) {
+    public OrderItemResponseDto getOrderItemById(User user, Long orderId, Long orderItemId) {
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(
                         "Item for order not found with id: " + orderId));
 
-        if (!order.getUser().getId().equals(userId)) {
-            throw new ForbiddenActionException("You don't have access to this order!");
-        }
+        AccessValidator.validateOwnership(user, order.getUser().getId());
 
         OrderItem orderItem = orderItemRepository.findById(orderItemId)
                 .filter(item -> item.getOrder().getId().equals(orderId))
@@ -80,4 +80,3 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemRepository.delete(orderItem);
     }
 }
-

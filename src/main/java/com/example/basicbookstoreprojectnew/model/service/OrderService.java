@@ -4,6 +4,7 @@ import com.example.basicbookstoreprojectnew.dto.OrderRequestDto;
 import com.example.basicbookstoreprojectnew.dto.OrderResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UpdateOrderStatusRequestDto;
 import com.example.basicbookstoreprojectnew.model.Order;
+import com.example.basicbookstoreprojectnew.model.User;
 import java.util.List;
 
 public interface OrderService {
@@ -12,8 +13,9 @@ public interface OrderService {
 
     List<OrderResponseDto> getUserOrders(Long userId);
 
-    public Order getOrderById(Long orderId);
+    Order getOrderById(User user, Long orderId);
 
-    OrderResponseDto updateOrderStatus(Long orderId, UpdateOrderStatusRequestDto request);
+    OrderResponseDto updateOrderStatus(
+            User user, Long orderId, UpdateOrderStatusRequestDto request);
 }
 

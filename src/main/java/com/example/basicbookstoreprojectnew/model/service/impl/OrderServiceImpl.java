@@ -11,9 +11,11 @@ import com.example.basicbookstoreprojectnew.model.Order;
 import com.example.basicbookstoreprojectnew.model.OrderItem;
 import com.example.basicbookstoreprojectnew.model.ShoppingCart;
 import com.example.basicbookstoreprojectnew.model.Status;
+import com.example.basicbookstoreprojectnew.model.User;
 import com.example.basicbookstoreprojectnew.model.repository.OrderRepository;
 import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
 import com.example.basicbookstoreprojectnew.model.service.OrderService;
+import com.example.basicbookstoreprojectnew.validation.AccessValidator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -73,20 +75,25 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId)
+    public Order getOrderById(User user, Long orderId) {
+        Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(
                         "Order not found with id: " + orderId));
+
+        AccessValidator.validateOwnership(user, order.getUser().getId());
+        return order;
     }
 
     @Override
     @Transactional
     public OrderResponseDto updateOrderStatus(
-            Long orderId, UpdateOrderStatusRequestDto request) {
+            User user, Long orderId, UpdateOrderStatusRequestDto request) {
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(
                         "Order not found with id: " + orderId));
+
+        AccessValidator.validateOwnership(user, orderId);
 
         if (request.status() != null) {
             order.setStatus(Status.valueOf(request.status().toUpperCase()));
