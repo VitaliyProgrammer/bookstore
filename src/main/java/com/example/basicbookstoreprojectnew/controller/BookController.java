@@ -3,7 +3,6 @@ package com.example.basicbookstoreprojectnew.controller;
 import com.example.basicbookstoreprojectnew.dto.BookDto;
 import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
-import com.example.basicbookstoreprojectnew.mapper.BookMapper;
 import com.example.basicbookstoreprojectnew.model.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Book management", description = "Endpoints for book information response")
 public class BookController {
     private final BookService bookService;
-    private final BookMapper bookMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

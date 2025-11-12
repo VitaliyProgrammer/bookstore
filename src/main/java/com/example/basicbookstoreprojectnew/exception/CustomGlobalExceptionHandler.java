@@ -85,7 +85,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(ShoppingCartNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleEntityNotFoundException(
+    public ResponseEntity<Map<String, Object>> handleShoppingCartNotFoundException(
             ShoppingCartNotFoundException shoppingCartNotFoundException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -93,6 +93,39 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put("error", shoppingCartNotFoundException.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleOrderNotFoundException(
+            OrderNotFoundException orderNotFoundException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", orderNotFoundException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(OrderItemNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleOrderItemNotFoundException(
+            OrderItemNotFoundException orderItemNotFoundException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", orderItemNotFoundException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(ForbiddenActionException.class)
+    public ResponseEntity<Map<String, Object>> handleForbiddenActionException(
+            ForbiddenActionException forbiddenActionException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", forbiddenActionException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
     }
 
     @ExceptionHandler(BookAlreadyExistsException.class)

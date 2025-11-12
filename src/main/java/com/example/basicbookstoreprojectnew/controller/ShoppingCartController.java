@@ -6,10 +6,9 @@ import com.example.basicbookstoreprojectnew.dto.ShoppingCartResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UpdateCartItemRequestDto;
 import com.example.basicbookstoreprojectnew.model.User;
 import com.example.basicbookstoreprojectnew.model.service.ShoppingCartService;
-import com.example.basicbookstoreprojectnew.model.service.UserService;
+import com.example.basicbookstoreprojectnew.security.AuthenticationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,8 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
         description = "Endpoints for shopping cart information")
 public class ShoppingCartController {
 
-    private final UserService userService;
     private final ShoppingCartService shoppingCartService;
+
+    private final AuthenticationUtil authenticationUtil;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -42,12 +42,7 @@ public class ShoppingCartController {
             description = "See all information user about all orders")
     public ShoppingCartResponseDto getShoppingCart(Authentication authentication) {
 
-        String email = authentication.getName();
-
-        User user = userService.findByEmail(email).orElseThrow(
-                () -> new EntityNotFoundException(
-                        "User not found with email: " + authentication.getName()));
-
+        User user = authenticationUtil.getCurrentUser(authentication);
         return shoppingCartService.getShoppingCartByUser(user.getId());
     }
 
@@ -59,10 +54,7 @@ public class ShoppingCartController {
     public ShoppingCartResponseDto addBookToCart(Authentication authentication,
                                                  @RequestBody AddToCartRequestDto request) {
 
-        User user = userService.findByEmail(authentication.getName()).orElseThrow(
-                () -> new EntityNotFoundException(
-                        "User not found with email: " + authentication.getName())
-        );
+        User user = authenticationUtil.getCurrentUser(authentication);
 
         return shoppingCartService.addBookToShoppingCart(
                 user.getId(),
@@ -70,7 +62,7 @@ public class ShoppingCartController {
                 request.quantity());
     }
 
-    @PutMapping("/items/{carItemId}")
+    @PutMapping("/cart-items/{carItemId}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Change information in the shopping cart",
@@ -81,7 +73,7 @@ public class ShoppingCartController {
         return shoppingCartService.updateCartItemQuantity(carItemId, request.quantity());
     }
 
-    @DeleteMapping("/items/{cartItemId}")
+    @DeleteMapping("/cart-items/{cartItemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Cancel for buy book in the shopping cart",
