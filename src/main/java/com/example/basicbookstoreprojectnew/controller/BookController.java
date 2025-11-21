@@ -70,7 +70,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Search books for a certain criteria",
-            description = "Search books for a certain sighs using pagination and sorting")
+                description = "Search books for a certain attribute using pagination and sorting")
     public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters, Pageable pageable) {
         return bookService.search(searchParameters, pageable);
     }
