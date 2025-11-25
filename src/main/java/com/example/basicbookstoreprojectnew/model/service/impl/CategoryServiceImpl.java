@@ -2,6 +2,7 @@ package com.example.basicbookstoreprojectnew.model.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.CategoryRequestDto;
 import com.example.basicbookstoreprojectnew.dto.CategoryResponseDto;
+import com.example.basicbookstoreprojectnew.exception.CategoryNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.CategoryMapper;
 import com.example.basicbookstoreprojectnew.model.Category;
 import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
@@ -29,7 +30,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDto getById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id!: " + id));
+                .orElseThrow(() -> new CategoryNotFoundException(
+                        "Category not found with id!: " + id));
         return categoryMapper.toDto(category);
     }
 
@@ -44,7 +46,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDto update(Long id, CategoryRequestDto request) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id!: " + id));
+                .orElseThrow(() -> new CategoryNotFoundException(
+                        "Category not found with id!: " + id));
 
         category.setName(request.name());
         category.setDescription(request.description());
@@ -56,7 +59,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Can't find category by id: " + id));
+                .orElseThrow(() -> new CategoryNotFoundException(
+                        "Can't find category by id: " + id));
 
         category.setDeleted(true);
         categoryRepository.save(category);
