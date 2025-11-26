@@ -1,7 +1,6 @@
 package com.example.basicbookstoreprojectnew.repository;
 
 import com.example.basicbookstoreprojectnew.model.Category;
-import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import com.example.basicbookstoreprojectnew.testcontainer.CustomMySqlContainer;
 import java.util.List;
 import java.util.Optional;

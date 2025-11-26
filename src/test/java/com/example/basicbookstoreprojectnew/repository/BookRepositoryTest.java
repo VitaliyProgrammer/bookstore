@@ -3,8 +3,6 @@ package com.example.basicbookstoreprojectnew.repository;
 import com.example.basicbookstoreprojectnew.exception.CategoryNotFoundException;
 import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.Category;
-import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
-import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import com.example.basicbookstoreprojectnew.testcontainer.CustomMySqlContainer;
 import java.math.BigDecimal;
 import java.util.HashSet;
