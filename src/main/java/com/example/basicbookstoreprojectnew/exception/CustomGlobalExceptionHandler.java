@@ -1,7 +1,6 @@
 package com.example.basicbookstoreprojectnew.exception;
 
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
-import jakarta.persistence.EntityNotFoundException;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -159,5 +158,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
-}
 
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Object> handleCategoryNotFoundException(
+            CategoryNotFoundException categoryException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", categoryException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+}

@@ -4,6 +4,7 @@ import com.example.basicbookstoreprojectnew.dto.BookDto;
 import com.example.basicbookstoreprojectnew.dto.BookDtoCategoryResponse;
 import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
+import com.example.basicbookstoreprojectnew.exception.EntityNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.BookMapper;
 import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.Category;
@@ -11,7 +12,6 @@ import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
 import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import com.example.basicbookstoreprojectnew.model.repository.impl.SpecificationBuilderImpl;
 import com.example.basicbookstoreprojectnew.model.service.BookService;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +68,22 @@ public class BookServiceImpl implements BookService {
     public BookDto updateBook(Long id, CreateBookRequestDto createBookRequestDto) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find book by id " + id));
+
         bookMapper.updateBookFromDto(createBookRequestDto, book);
+
+        Set<Category> updatedCategory = createBookRequestDto.categoryIds().stream()
+                .map(categoryId -> categoryRepository.findById(categoryId)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                "Category not found with id: " + categoryId + " !"
+                        )))
+                .collect(Collectors.toSet());
+
+        book.getCategories().clear();
+
+        book.setCategories(updatedCategory);
+
+        updatedCategory.forEach(category -> category.getBooks().add(book));
+
         bookRepository.save(book);
         return bookMapper.toDto(book);
     }
