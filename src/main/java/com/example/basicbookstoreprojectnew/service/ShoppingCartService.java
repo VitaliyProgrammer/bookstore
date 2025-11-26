@@ -1,4 +1,4 @@
-package com.example.basicbookstoreprojectnew.model.service;
+package com.example.basicbookstoreprojectnew.service;
 
 import com.example.basicbookstoreprojectnew.dto.CartItemResponseDto;
 import com.example.basicbookstoreprojectnew.dto.ShoppingCartResponseDto;

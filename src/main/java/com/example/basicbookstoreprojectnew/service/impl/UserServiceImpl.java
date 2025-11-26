@@ -1,4 +1,4 @@
-package com.example.basicbookstoreprojectnew.model.service.impl;
+package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
@@ -10,11 +10,11 @@ import com.example.basicbookstoreprojectnew.model.Role;
 import com.example.basicbookstoreprojectnew.model.RoleName;
 import com.example.basicbookstoreprojectnew.model.ShoppingCart;
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.repository.RoleRepository;
-import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
-import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
-import com.example.basicbookstoreprojectnew.model.service.UserService;
+import com.example.basicbookstoreprojectnew.repository.RoleRepository;
+import com.example.basicbookstoreprojectnew.repository.ShoppingCartRepository;
+import com.example.basicbookstoreprojectnew.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
+import com.example.basicbookstoreprojectnew.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;

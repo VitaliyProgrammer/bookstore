@@ -1,4 +1,4 @@
-package com.example.basicbookstoreprojectnew.model.repository.field;
+package com.example.basicbookstoreprojectnew.repository.field;
 
 public class BookSpecificationKeys {
 

@@ -1,9 +1,9 @@
-package com.example.basicbookstoreprojectnew.model.service;
+package com.example.basicbookstoreprojectnew.service;
 
 import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
+import com.example.basicbookstoreprojectnew.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

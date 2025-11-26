@@ -1,10 +1,10 @@
-package com.example.basicbookstoreprojectnew.model.repository.impl;
+package com.example.basicbookstoreprojectnew.repository.impl;
 
 import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.model.Book;
-import com.example.basicbookstoreprojectnew.model.repository.field.BookSpecificationKeys;
-import com.example.basicbookstoreprojectnew.model.repository.specification.SpecificationBuilder;
-import com.example.basicbookstoreprojectnew.model.repository.specification.SpecificationProviderManager;
+import com.example.basicbookstoreprojectnew.repository.field.BookSpecificationKeys;
+import com.example.basicbookstoreprojectnew.repository.specification.SpecificationBuilder;
+import com.example.basicbookstoreprojectnew.repository.specification.SpecificationProviderManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.example.basicbookstoreprojectnew.model.service.impl;
+package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.OrderRequestDto;
 import com.example.basicbookstoreprojectnew.dto.OrderResponseDto;
@@ -12,9 +12,9 @@ import com.example.basicbookstoreprojectnew.model.OrderItem;
 import com.example.basicbookstoreprojectnew.model.ShoppingCart;
 import com.example.basicbookstoreprojectnew.model.Status;
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.repository.OrderRepository;
-import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
-import com.example.basicbookstoreprojectnew.model.service.OrderService;
+import com.example.basicbookstoreprojectnew.repository.OrderRepository;
+import com.example.basicbookstoreprojectnew.repository.ShoppingCartRepository;
+import com.example.basicbookstoreprojectnew.service.OrderService;
 import com.example.basicbookstoreprojectnew.validation.AccessValidator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

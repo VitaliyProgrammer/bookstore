@@ -1,4 +1,4 @@
-package com.example.basicbookstoreprojectnew.model.service.impl;
+package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.CartItemResponseDto;
 import com.example.basicbookstoreprojectnew.dto.ShoppingCartResponseDto;
@@ -9,11 +9,11 @@ import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.CartItem;
 import com.example.basicbookstoreprojectnew.model.ShoppingCart;
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
-import com.example.basicbookstoreprojectnew.model.repository.CartItemRepository;
-import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
-import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
-import com.example.basicbookstoreprojectnew.model.service.ShoppingCartService;
+import com.example.basicbookstoreprojectnew.repository.BookRepository;
+import com.example.basicbookstoreprojectnew.repository.CartItemRepository;
+import com.example.basicbookstoreprojectnew.repository.ShoppingCartRepository;
+import com.example.basicbookstoreprojectnew.repository.UserRepository;
+import com.example.basicbookstoreprojectnew.service.ShoppingCartService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

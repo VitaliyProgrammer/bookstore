@@ -1,12 +1,12 @@
-package com.example.basicbookstoreprojectnew.model.service.impl;
+package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.CategoryRequestDto;
 import com.example.basicbookstoreprojectnew.dto.CategoryResponseDto;
 import com.example.basicbookstoreprojectnew.exception.CategoryNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.CategoryMapper;
 import com.example.basicbookstoreprojectnew.model.Category;
-import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
-import com.example.basicbookstoreprojectnew.model.service.CategoryService;
+import com.example.basicbookstoreprojectnew.repository.CategoryRepository;
+import com.example.basicbookstoreprojectnew.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

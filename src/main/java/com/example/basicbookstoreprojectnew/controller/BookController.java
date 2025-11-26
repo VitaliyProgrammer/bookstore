@@ -3,7 +3,7 @@ package com.example.basicbookstoreprojectnew.controller;
 import com.example.basicbookstoreprojectnew.dto.BookDto;
 import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
-import com.example.basicbookstoreprojectnew.model.service.BookService;
+import com.example.basicbookstoreprojectnew.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -70,7 +70,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Search books for a certain criteria",
-                description = "Search books for a certain attribute using pagination and sorting")
+            description = "Search books for a certain attribute using pagination and sorting")
     public Page<BookDto> searchBooks(BookSearchParametersDto searchParameters, Pageable pageable) {
         return bookService.search(searchParameters, pageable);
     }

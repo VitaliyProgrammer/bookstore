@@ -1,4 +1,4 @@
-package com.example.basicbookstoreprojectnew.model.service.impl;
+package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.OrderItemResponseDto;
 import com.example.basicbookstoreprojectnew.exception.OrderItemNotFoundException;
@@ -7,9 +7,9 @@ import com.example.basicbookstoreprojectnew.mapper.OrderItemMapper;
 import com.example.basicbookstoreprojectnew.model.Order;
 import com.example.basicbookstoreprojectnew.model.OrderItem;
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.repository.OrderItemRepository;
-import com.example.basicbookstoreprojectnew.model.repository.OrderRepository;
-import com.example.basicbookstoreprojectnew.model.service.OrderItemService;
+import com.example.basicbookstoreprojectnew.repository.OrderItemRepository;
+import com.example.basicbookstoreprojectnew.repository.OrderRepository;
+import com.example.basicbookstoreprojectnew.service.OrderItemService;
 import com.example.basicbookstoreprojectnew.validation.AccessValidator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.basicbookstoreprojectnew.security;
 
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.service.UserService;
+import com.example.basicbookstoreprojectnew.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
