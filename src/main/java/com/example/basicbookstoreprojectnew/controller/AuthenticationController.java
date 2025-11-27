@@ -4,7 +4,7 @@ import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
-import com.example.basicbookstoreprojectnew.model.service.UserService;
+import com.example.basicbookstoreprojectnew.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
