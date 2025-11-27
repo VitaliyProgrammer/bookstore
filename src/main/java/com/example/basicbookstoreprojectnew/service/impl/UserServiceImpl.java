@@ -1,0 +1,111 @@
+package com.example.basicbookstoreprojectnew.service.impl;
+
+import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
+import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
+import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
+import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
+import com.example.basicbookstoreprojectnew.exception.RegistrationException;
+import com.example.basicbookstoreprojectnew.exception.UserNotFoundException;
+import com.example.basicbookstoreprojectnew.mapper.UserMapper;
+import com.example.basicbookstoreprojectnew.model.Role;
+import com.example.basicbookstoreprojectnew.model.RoleName;
+import com.example.basicbookstoreprojectnew.model.ShoppingCart;
+import com.example.basicbookstoreprojectnew.model.User;
+import com.example.basicbookstoreprojectnew.repository.RoleRepository;
+import com.example.basicbookstoreprojectnew.repository.ShoppingCartRepository;
+import com.example.basicbookstoreprojectnew.repository.UserRepository;
+import com.example.basicbookstoreprojectnew.security.JwtUtil;
+import com.example.basicbookstoreprojectnew.service.UserService;
+import java.util.List;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+
+    private final RoleRepository roleRepository;
+
+    private final ShoppingCartRepository shoppingCartRepository;
+
+    private final JwtUtil jwtUtil;
+
+    @Override
+    public UserRegistrationResponseDto registration(
+            UserRegistrationRequestDto registrationDto) {
+        if (userRepository.existsByEmail(registrationDto.getEmail())) {
+            throw new RegistrationException("User with email: " + registrationDto.getEmail()
+                    + " already exists!");
+        }
+
+        User user = userMapper.toModel(registrationDto);
+        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+
+        user = userRepository.save(user);
+        Role userRole = roleRepository.findByRoleName(RoleName.USER)
+                .orElseThrow(() -> new UserNotFoundException("The USER role not found!: "));
+
+        user.getRoles().add(userRole);
+
+        user = userRepository.save(user);
+
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUser(user);
+        shoppingCartRepository.save(shoppingCart);
+
+        return userMapper.toDto(user);
+    }
+
+    @Override
+    public UserLoginResponseDto login(UserLoginRequestDto request) {
+
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User not found with email!: " + request.email()));
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new UserNotFoundException("Invalid email or password! ");
+        }
+
+        List<String> roles = user.getRoles().stream()
+                .map(role -> role.getRoleName().name())
+                .toList();
+
+        String token = jwtUtil.generateToken(user.getEmail(), roles);
+
+        return new UserLoginResponseDto(token);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<UserRegistrationResponseDto> findAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public UserRegistrationResponseDto findById(Long id) {
+        return userRepository.findById(id)
+                .map(userMapper::toDto)
+                .orElseThrow(() -> new UserNotFoundException("User with " + id + " not found!"));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException("Can`t find user by id!: " + id);
+        }
+        userRepository.deleteById(id);
+    }
+}
+
