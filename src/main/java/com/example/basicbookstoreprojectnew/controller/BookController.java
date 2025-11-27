@@ -3,7 +3,7 @@ package com.example.basicbookstoreprojectnew.controller;
 import com.example.basicbookstoreprojectnew.dto.BookDto;
 import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
-import com.example.basicbookstoreprojectnew.model.service.BookService;
+import com.example.basicbookstoreprojectnew.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

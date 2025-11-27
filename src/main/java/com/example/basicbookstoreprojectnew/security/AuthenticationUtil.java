@@ -1,8 +1,8 @@
 package com.example.basicbookstoreprojectnew.security;
 
+import com.example.basicbookstoreprojectnew.exception.UserNotFoundException;
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.basicbookstoreprojectnew.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class AuthenticationUtil {
         String email = authentication.getName();
 
         return userService.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException(
+                .orElseThrow(() -> new UserNotFoundException(
                         "User not found with email: " + email));
     }
 }
