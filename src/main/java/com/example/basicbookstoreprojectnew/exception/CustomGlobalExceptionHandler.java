@@ -168,7 +168,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put("timestamp", LocalDateTime.now().format(formatter));
         body.put("error", bookNotFoundException.getMessage());
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
 
     @ExceptionHandler(JwtException.class)
