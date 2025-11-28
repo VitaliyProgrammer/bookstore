@@ -14,22 +14,15 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.context.annotation.Import;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@Transactional
-@Testcontainers
 @TestInstance(Lifecycle.PER_CLASS)
+@Import(CustomMySqlContainer.class)
 public class ShoppingCartRepositoryTest {
-
-    @Container
-    private static final CustomMySqlContainer mySqlContainer =
-            CustomMySqlContainer.getInstance();
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;

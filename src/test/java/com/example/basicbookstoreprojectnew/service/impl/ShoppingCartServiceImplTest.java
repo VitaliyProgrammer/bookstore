@@ -79,7 +79,8 @@ public class ShoppingCartServiceImplTest {
     @DisplayName("createShoppingCart - creates new shopping cart")
     void createShoppingCart() {
 
-        ShoppingCartResponseDto shoppingCartResponseDto = shoppingCartService.getShoppingCartByUser(savedUser.getId());
+        ShoppingCartResponseDto shoppingCartResponseDto =
+                shoppingCartService.getShoppingCartByUser(savedUser.getId());
 
         assertThat(shoppingCartResponseDto.id()).isNotNull();
         assertThat(shoppingCartResponseDto.userId()).isEqualTo(savedUser.getId());
@@ -96,7 +97,8 @@ public class ShoppingCartServiceImplTest {
         shoppingCart.setUser(savedUser);
         shoppingCartRepository.save(shoppingCart);
 
-        ShoppingCartResponseDto shoppingCartResponseDto = shoppingCartService.getShoppingCartByUser(savedUser.getId());
+        ShoppingCartResponseDto shoppingCartResponseDto =
+                shoppingCartService.getShoppingCartByUser(savedUser.getId());
 
         assertThat(shoppingCartResponseDto.id()).isEqualTo(shoppingCart.getId());
     }
@@ -105,7 +107,8 @@ public class ShoppingCartServiceImplTest {
     @DisplayName("getShoppingCartByUserNotFound - throws exception, user not found")
     void getShoppingCartByUserNotFound() {
 
-        assertThrows(EntityNotFoundException.class, () -> shoppingCartService.getShoppingCartByUser(9999L));
+        assertThrows(EntityNotFoundException.class,
+                () -> shoppingCartService.getShoppingCartByUser(9999L));
     }
 
     @Test
@@ -116,7 +119,9 @@ public class ShoppingCartServiceImplTest {
         shoppingCart.setUser(savedUser);
         shoppingCartRepository.save(shoppingCart);
 
-        ShoppingCartResponseDto shoppingCartResponseDto = shoppingCartService.addBookToShoppingCart(savedUser.getId(), savedBook.getId(), 5);
+        ShoppingCartResponseDto shoppingCartResponseDto =
+                shoppingCartService.addBookToShoppingCart(
+                        savedUser.getId(), savedBook.getId(), 5);
 
         assertThat(shoppingCartResponseDto.id()).isEqualTo(shoppingCart.getId());
 
@@ -124,7 +129,8 @@ public class ShoppingCartServiceImplTest {
 
         assertThat(shoppingCartResponseDto.cartItems().get(0).quantity()).isEqualTo(5);
 
-        assertThat(shoppingCartResponseDto.cartItems().get(0).bookId()).isEqualTo(savedBook.getId());
+        assertThat(shoppingCartResponseDto.cartItems().get(0).bookId())
+                .isEqualTo(savedBook.getId());
     }
 
     @Test
@@ -142,7 +148,9 @@ public class ShoppingCartServiceImplTest {
 
         shoppingCart.getCartItems().add(cartItem);
 
-        ShoppingCartResponseDto shoppingCartResponseDto = shoppingCartService.addBookToShoppingCart(savedUser.getId(), savedBook.getId(), 3);
+        ShoppingCartResponseDto shoppingCartResponseDto =
+                shoppingCartService.addBookToShoppingCart(
+                        savedUser.getId(), savedBook.getId(), 3);
 
         assertThat(shoppingCartResponseDto.cartItems().get(0).quantity()).isEqualTo(5);
     }
@@ -151,7 +159,9 @@ public class ShoppingCartServiceImplTest {
     @DisplayName("addBook_shoppingCartNotFound - shopping cart not found, throws exception")
     void addBook_shoppingCartNotFound() {
 
-        assertThrows(ShoppingCartNotFoundException.class, () -> shoppingCartService.addBookToShoppingCart(9999L, savedBook.getId(), 1));
+        assertThrows(ShoppingCartNotFoundException.class,
+                () -> shoppingCartService.addBookToShoppingCart(
+                        9999L, savedBook.getId(), 1));
 
     }
 
@@ -163,7 +173,9 @@ public class ShoppingCartServiceImplTest {
         shoppingCart.setUser(savedUser);
         shoppingCartRepository.save(shoppingCart);
 
-        assertThrows(EntityNotFoundException.class, () -> shoppingCartService.addBookToShoppingCart(savedUser.getId(), 9999L, 1));
+        assertThrows(EntityNotFoundException.class,
+                () -> shoppingCartService.addBookToShoppingCart(
+                        savedUser.getId(), 9999L, 1));
     }
 
     @Test
@@ -181,7 +193,8 @@ public class ShoppingCartServiceImplTest {
         shoppingCart.getCartItems().add(cartItem);
         shoppingCartRepository.save(shoppingCart);
 
-        CartItemResponseDto cartItemResponseDto = shoppingCartService.updateCartItemQuantity(cartItem.getId(), 5);
+        CartItemResponseDto cartItemResponseDto =
+                shoppingCartService.updateCartItemQuantity(cartItem.getId(), 5);
 
         assertThat(cartItemResponseDto.quantity()).isEqualTo(5);
     }
@@ -190,7 +203,8 @@ public class ShoppingCartServiceImplTest {
     @DisplayName("updateCartItemQuantity - cart item not found")
     void updateCartItem_notFound() {
 
-        assertThrows(ShoppingCartNotFoundException.class, () -> shoppingCartService.updateCartItemQuantity(9999L, 5));
+        assertThrows(ShoppingCartNotFoundException.class,
+                () -> shoppingCartService.updateCartItemQuantity(9999L, 5));
     }
 
     @Test
@@ -217,6 +231,7 @@ public class ShoppingCartServiceImplTest {
     @DisplayName("removeCartItem - cart item not found, throws exception")
     void removeCartItem_notFound() {
 
-        assertThrows(ShoppingCartNotFoundException.class, () -> shoppingCartService.removeCartItem(9999L));
+        assertThrows(ShoppingCartNotFoundException.class,
+                () -> shoppingCartService.removeCartItem(9999L));
     }
 }
