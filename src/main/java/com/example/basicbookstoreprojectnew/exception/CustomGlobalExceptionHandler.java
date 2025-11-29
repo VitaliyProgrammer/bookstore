@@ -1,7 +1,6 @@
 package com.example.basicbookstoreprojectnew.exception;
 
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
-import jakarta.persistence.EntityNotFoundException;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -73,13 +72,35 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleEntityNotFoundException(
-            EntityNotFoundException entityNotFoundException) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleUserNotFoundException(
+            UserNotFoundException userNotFoundException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", entityNotFoundException.getMessage());
+        body.put("error", userNotFoundException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(CategoryAlreadyExistsException.class)
+    public ResponseEntity<Object> handleCategoryAlreadyExistsException(
+            CategoryAlreadyExistsException categoryException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", categoryException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleCategoryNotFoundException(
+            CategoryNotFoundException categoryNotFoundException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", categoryNotFoundException.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
@@ -129,7 +150,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(BookAlreadyExistsException.class)
-    public ResponseEntity<Object> handleBookAlreadyExists(
+    public ResponseEntity<Object> handleBookAlreadyExistsException(
             BookAlreadyExistsException bookAlreadyExistsException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -139,8 +160,19 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<Object> handleBookNotFoundException(
+            BookNotFoundException bookNotFoundException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", bookNotFoundException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
     @ExceptionHandler(JwtException.class)
-    public ResponseEntity<Object> handleJwtIsValidOrNotExists(JwtException jwtException) {
+    public ResponseEntity<Object> handleJwtIsValidOrNotExistsException(JwtException jwtException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now().format(formatter));
@@ -149,15 +181,14 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
     }
 
-    @ExceptionHandler(CategoryAlreadyExistsException.class)
-    public ResponseEntity<Object> handleCategoryAlreadyExists(
-            CategoryAlreadyExistsException categoryException) {
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Object> handleExpiredJwtException(
+            ExpiredJwtException expiredJwtException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", categoryException.getMessage());
+        body.put("error", expiredJwtException.getMessage());
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
     }
 }
-
