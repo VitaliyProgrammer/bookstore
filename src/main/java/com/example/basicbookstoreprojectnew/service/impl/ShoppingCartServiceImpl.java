@@ -2,7 +2,9 @@ package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.CartItemResponseDto;
 import com.example.basicbookstoreprojectnew.dto.ShoppingCartResponseDto;
+import com.example.basicbookstoreprojectnew.exception.BookNotFoundException;
 import com.example.basicbookstoreprojectnew.exception.ShoppingCartNotFoundException;
+import com.example.basicbookstoreprojectnew.exception.UserNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.CartItemMapper;
 import com.example.basicbookstoreprojectnew.mapper.ShoppingCartMapper;
 import com.example.basicbookstoreprojectnew.model.Book;
@@ -16,6 +18,7 @@ import com.example.basicbookstoreprojectnew.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.service.ShoppingCartService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,7 +37,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCartResponseDto getShoppingCartByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("User not found with id: " + userId));
+                        () -> new UserNotFoundException("User not found with id: " + userId));
 
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(userId)
                 .orElseGet(() -> {
@@ -53,7 +56,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                         () -> new ShoppingCartNotFoundException("Shopping cart can`t to find!: "));
 
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new EntityNotFoundException("Book can`t to find!: "));
+                .orElseThrow(() -> new BookNotFoundException("Book can`t to find!: "));
 
         CartItem cartsInItem = shoppingCart.getCartItems().stream()
                 .filter(cartItem -> cartItem.getBook().getId().equals(book.getId()))
