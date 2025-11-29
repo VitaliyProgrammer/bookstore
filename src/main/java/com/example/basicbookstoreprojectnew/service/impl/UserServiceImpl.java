@@ -1,21 +1,21 @@
-package com.example.basicbookstoreprojectnew.model.service.impl;
+package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
 import com.example.basicbookstoreprojectnew.exception.RegistrationException;
+import com.example.basicbookstoreprojectnew.exception.UserNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.UserMapper;
 import com.example.basicbookstoreprojectnew.model.Role;
 import com.example.basicbookstoreprojectnew.model.RoleName;
 import com.example.basicbookstoreprojectnew.model.ShoppingCart;
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.repository.RoleRepository;
-import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
-import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
-import com.example.basicbookstoreprojectnew.model.service.UserService;
+import com.example.basicbookstoreprojectnew.repository.RoleRepository;
+import com.example.basicbookstoreprojectnew.repository.ShoppingCartRepository;
+import com.example.basicbookstoreprojectnew.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.basicbookstoreprojectnew.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
         user = userRepository.save(user);
         Role userRole = roleRepository.findByRoleName(RoleName.USER)
-                .orElseThrow(() -> new RuntimeException("The USER role not found!: "));
+                .orElseThrow(() -> new UserNotFoundException("The USER role not found!: "));
 
         user.getRoles().add(userRole);
 
@@ -65,11 +65,11 @@ public class UserServiceImpl implements UserService {
     public UserLoginResponseDto login(UserLoginRequestDto request) {
 
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new EntityNotFoundException(
+                .orElseThrow(() -> new UserNotFoundException(
                         "User not found with email!: " + request.email()));
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new RuntimeException("Invalid email or password! ");
+            throw new UserNotFoundException("Invalid email or password! ");
         }
 
         List<String> roles = user.getRoles().stream()
@@ -97,13 +97,13 @@ public class UserServiceImpl implements UserService {
     public UserRegistrationResponseDto findById(Long id) {
         return userRepository.findById(id)
                 .map(userMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("User with " + id + " not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User with " + id + " not found!"));
     }
 
     @Override
     public void deleteById(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("Can`t find user by id!: " + id);
+            throw new UserNotFoundException("Can`t find user by id!: " + id);
         }
         userRepository.deleteById(id);
     }
