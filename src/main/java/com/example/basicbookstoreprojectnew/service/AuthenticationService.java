@@ -2,6 +2,7 @@ package com.example.basicbookstoreprojectnew.service;
 
 import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
+import com.example.basicbookstoreprojectnew.exception.BookNotFoundException;
 import com.example.basicbookstoreprojectnew.model.User;
 import com.example.basicbookstoreprojectnew.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
@@ -37,7 +38,7 @@ public class AuthenticationService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+                .orElseThrow(() -> new BookNotFoundException("User not found!"));
 
         List<String> roles = user.getRoles().stream()
                 .map(role -> role.getRoleName().name())

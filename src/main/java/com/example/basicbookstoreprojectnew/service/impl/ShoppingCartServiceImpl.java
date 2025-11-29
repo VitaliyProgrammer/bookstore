@@ -16,9 +16,7 @@ import com.example.basicbookstoreprojectnew.repository.CartItemRepository;
 import com.example.basicbookstoreprojectnew.repository.ShoppingCartRepository;
 import com.example.basicbookstoreprojectnew.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.service.ShoppingCartService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
