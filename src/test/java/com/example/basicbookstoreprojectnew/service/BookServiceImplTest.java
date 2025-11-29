@@ -302,3 +302,4 @@ public class BookServiceImplTest {
         assertThat(deletedBook.isDeleted()).isTrue();
     }
 }
+

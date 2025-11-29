@@ -21,3 +21,4 @@ public class CustomMySqlContainer {
         registry.add("spring.datasource.password", mysql::getPassword);
     }
 }
+

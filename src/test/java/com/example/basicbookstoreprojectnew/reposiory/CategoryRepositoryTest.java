@@ -119,3 +119,4 @@ public class CategoryRepositoryTest extends CustomMySqlContainer {
         assertThat(idIsNotExists).isFalse();
     }
 }
+
