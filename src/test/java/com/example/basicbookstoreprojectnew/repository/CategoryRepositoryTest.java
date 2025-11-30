@@ -2,7 +2,6 @@ package com.example.basicbookstoreprojectnew.repository;
 
 import com.example.basicbookstoreprojectnew.model.Category;
 import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
-import com.example.basicbookstoreprojectnew.testcontainer.CustomMySqlContainer;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,23 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
-@Testcontainers
 public class CategoryRepositoryTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
-
-    @Container
-    private static final CustomMySqlContainer myCustomSqlContainer =
-            CustomMySqlContainer.getInstance();
 
     private Category category1, category2;
 

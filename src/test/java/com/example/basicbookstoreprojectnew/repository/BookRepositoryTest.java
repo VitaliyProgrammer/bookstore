@@ -5,7 +5,6 @@ import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.Category;
 import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
 import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
-import com.example.basicbookstoreprojectnew.testcontainer.CustomMySqlContainer;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,20 +16,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
-@Testcontainers
 public class BookRepositoryTest {
-
-    @Container
-    private static final CustomMySqlContainer myCustomSqlContainer =
-            CustomMySqlContainer.getInstance();
 
     @Autowired
     private BookRepository bookRepository;
