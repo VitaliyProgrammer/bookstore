@@ -1,7 +1,6 @@
 package com.example.basicbookstoreprojectnew.exception;
 
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
-import jakarta.persistence.EntityNotFoundException;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

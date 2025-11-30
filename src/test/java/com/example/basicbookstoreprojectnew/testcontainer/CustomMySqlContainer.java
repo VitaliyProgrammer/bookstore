@@ -1,25 +1,33 @@
 package com.example.basicbookstoreprojectnew.testcontainer;
 
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
-public class CustomMySqlContainer {
+public class CustomMySqlContainer extends MySQLContainer<CustomMySqlContainer> {
 
-    @Container
-    public static final MySQLContainer<?> mysql =
-            new MySQLContainer<>("mysql:8.0")
-                    .withDatabaseName("testdb")
-                    .withUsername("test")
-                    .withPassword("test");
+    private static final String IMAGE_VERSION = "mysql:8.0";
+    private static CustomMySqlContainer container;
 
-    @DynamicPropertySource
-    static void registerMysql(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", mysql::getJdbcUrl);
-        registry.add("spring.datasource.username", mysql::getUsername);
-        registry.add("spring.datasource.password", mysql::getPassword);
+    public CustomMySqlContainer() {
+        super(IMAGE_VERSION);
+    }
+
+    public static synchronized CustomMySqlContainer getInstance() {
+        if (container == null) {
+            container = new CustomMySqlContainer();
+        }
+        return container;
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        System.setProperty("spring.datasource.url", container.getJdbcUrl());
+        System.setProperty("spring.datasource.username", container.getUsername());
+        System.setProperty("spring.datasource.password", container.getPassword());
+    }
+
+    @Override
+    public void stop() {
+
     }
 }
