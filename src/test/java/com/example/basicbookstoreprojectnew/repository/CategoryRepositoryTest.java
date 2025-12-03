@@ -4,18 +4,17 @@ import com.example.basicbookstoreprojectnew.model.Category;
 import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@Transactional
 public class CategoryRepositoryTest {
 
     @Autowired
@@ -25,6 +24,9 @@ public class CategoryRepositoryTest {
 
     @BeforeEach
     void setUp() {
+
+        categoryRepository.deleteAll();
+        categoryRepository.flush();
 
         category1 = new Category();
         category1.setName("Programming");
@@ -36,6 +38,12 @@ public class CategoryRepositoryTest {
         category2.setName("Action");
         category2.setDescription("About action");
         categoryRepository.save(category2);
+    }
+
+    @AfterEach
+    void tearDown() {
+        categoryRepository.deleteAll();
+        categoryRepository.flush();
     }
 
     @Test

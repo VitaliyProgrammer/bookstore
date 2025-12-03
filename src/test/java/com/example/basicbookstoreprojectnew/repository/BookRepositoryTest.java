@@ -8,6 +8,7 @@ import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,13 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Transactional
 public class BookRepositoryTest {
 
     @Autowired
@@ -38,8 +37,8 @@ public class BookRepositoryTest {
     void setUp() {
 
         bookRepository.deleteAll();
-        categoryRepository.deleteAll();
         bookRepository.flush();
+        categoryRepository.deleteAll();
         categoryRepository.flush();
 
         category = new Category();
@@ -59,6 +58,13 @@ public class BookRepositoryTest {
         savedBook = bookRepository.save(newBook);
     }
 
+    @AfterEach
+    void tearDown() {
+        bookRepository.deleteAll();
+        bookRepository.flush();
+        categoryRepository.deleteAll();
+        categoryRepository.flush();
+    }
     @Test
     @DisplayName("Find all books with pagination")
     void findAllWithPagination() {

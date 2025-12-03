@@ -8,11 +8,11 @@ import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
 import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@Transactional
 @AutoConfigureMockMvc
 public class CategoryControllerTest {
 
@@ -76,7 +75,9 @@ public class CategoryControllerTest {
         );
 
         bookRepository.deleteAll();
+        bookRepository.flush();
         categoryRepository.deleteAll();
+        categoryRepository.flush();
 
         category = new Category();
         category.setName("Programming");
@@ -95,6 +96,14 @@ public class CategoryControllerTest {
         category.getBooks().add(book);
 
         bookRepository.save(book);
+    }
+
+    @AfterEach
+    void tearDown() {
+        bookRepository.deleteAll();
+        bookRepository.flush();
+        categoryRepository.deleteAll();
+        categoryRepository.flush();
     }
 
     @Test
