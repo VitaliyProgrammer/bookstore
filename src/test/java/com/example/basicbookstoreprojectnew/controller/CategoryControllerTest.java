@@ -1,5 +1,6 @@
 package com.example.basicbookstoreprojectnew.controller;
 
+import com.example.basicbookstoreprojectnew.dto.BookDtoCategoryResponse;
 import com.example.basicbookstoreprojectnew.dto.CategoryRequestDto;
 import com.example.basicbookstoreprojectnew.dto.CategoryResponseDto;
 import com.example.basicbookstoreprojectnew.model.Book;
@@ -7,9 +8,10 @@ import com.example.basicbookstoreprojectnew.model.Category;
 import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
 import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
@@ -21,16 +23,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@Transactional
 @AutoConfigureMockMvc
 public class CategoryControllerTest {
 
@@ -49,6 +53,9 @@ public class CategoryControllerTest {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private EntityManager entityManager;
+
     private CategoryRequestDto categoryRequest;
 
     private CategoryResponseDto categoryResponse;
@@ -60,6 +67,8 @@ public class CategoryControllerTest {
     private Book book;
 
     private Category category;
+
+    private CategoryResponseDto categoryDto;
 
     @BeforeEach
     void setUp() {
@@ -74,11 +83,6 @@ public class CategoryControllerTest {
                 List.of("ADMIN")
         );
 
-        bookRepository.deleteAll();
-        bookRepository.flush();
-        categoryRepository.deleteAll();
-        categoryRepository.flush();
-
         category = new Category();
         category.setName("Programming");
         category.setDescription("About programming");
@@ -92,45 +96,65 @@ public class CategoryControllerTest {
         book.setDescription("About effective programming");
         book.setIsbn("9780134685991");
         book.setPrice(BigDecimal.valueOf(30.0));
-        book.setCategories(new HashSet<>(Set.of(category)));
-        category.getBooks().add(book);
+        book.setCategories(Set.of(category));
 
         bookRepository.save(book);
+
+        category.getBooks().add(book);
+
+        categoryDto = new CategoryResponseDto(
+                category.getId(),
+                category.getName(),
+                category.getDescription()
+        );
     }
 
     @AfterEach
     void tearDown() {
         bookRepository.deleteAll();
-        bookRepository.flush();
         categoryRepository.deleteAll();
-        categoryRepository.flush();
     }
 
     @Test
     @DisplayName("GET /categories - should return all categories")
     void getAllCategories() throws Exception {
 
-        mockMvc.perform(get("/categories")
+        MvcResult mvcResult = mockMvc.perform(get("/categories")
                         .header("Authorization", userToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].name").value(category.getName()));
+                .andReturn();
+
+        JsonNode root = objectMapper.readTree(mvcResult.getResponse().getContentAsString());
+        JsonNode content = root.get("content");
+
+        CategoryResponseDto[] arrayDto =
+                objectMapper.treeToValue(content, CategoryResponseDto[].class);
+
+        List<CategoryResponseDto> listDto = List.of(arrayDto);
+
+        assertThat(listDto).hasSize(1);
+        assertThat(listDto).containsExactly(categoryDto);
     }
 
     @Test
-    @DisplayName("GET /categories{id} - should return specific categories")
-    void getAllCategoryById() throws Exception {
+    @DisplayName("GET /categories/{id} - should return specific categories")
+    void getCategoryById_Existing() throws Exception {
 
-        mockMvc.perform(get("/categories/{id}", category.getId())
+        MvcResult mvcResult = mockMvc.perform(get("/categories/{id}", category.getId())
                         .header("Authorization", userToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(category.getId()))
-                .andExpect(jsonPath("$.name").value(category.getName()));
+                .andReturn();
+
+        CategoryResponseDto arrayDto = objectMapper
+                .readValue(mvcResult.getResponse().getContentAsString(),
+                        CategoryResponseDto.class);
+
+        assertThat(arrayDto).isEqualTo(categoryDto);
     }
 
     @Test
-    @DisplayName("GET /categories{id} - non-existing category")
-    void getAllCategoryById_notFound() throws Exception {
+    @DisplayName("GET /categories/{id} - non-existing category")
+    void getCategoryById_notFound() throws Exception {
 
         mockMvc.perform(get("/categories/{id}", 999L)
                         .header("Authorization", userToken))
@@ -141,12 +165,24 @@ public class CategoryControllerTest {
     @DisplayName("GET /categories/{id}/books - should return books of category")
     void getBooksByCategory() throws Exception {
 
-        mockMvc.perform(get("/categories/{id}/books", category.getId())
+        MvcResult mvcResult = mockMvc.perform(get("/categories/{id}/books", category.getId())
                         .header("Authorization", userToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].title").value(book.getTitle()))
-                .andExpect(jsonPath("$.content[0].author").value(book.getAuthor()));
+                .andReturn();
+
+        JsonNode root = objectMapper.readTree(mvcResult.getResponse().getContentAsString());
+        JsonNode content = root.has("content") ? root.get("content") : root;
+
+        BookDtoCategoryResponse[] arrayDto =
+                objectMapper.treeToValue(content, BookDtoCategoryResponse[].class);
+
+        assertThat(arrayDto).hasSize(1);
+
+        BookDtoCategoryResponse categoryResponse = arrayDto[0];
+
+        assertThat(categoryResponse.title()).isEqualTo(book.getTitle());
+        assertThat(categoryResponse.author()).isEqualTo(book.getAuthor());
+        assertThat(categoryResponse.description()).isEqualTo(book.getDescription());
     }
 
     @Test
@@ -158,13 +194,19 @@ public class CategoryControllerTest {
                 "About action"
         );
 
-        mockMvc.perform(post("/categories")
+        MvcResult mvcResult = mockMvc.perform(post("/categories")
                         .header("Authorization", adminToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(categoryRequest)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value(categoryRequest.name()))
-                .andExpect(jsonPath("$.description").value(categoryRequest.description()));
+                .andReturn();
+
+        CategoryResponseDto createdDto = objectMapper
+                .readValue(mvcResult.getResponse().getContentAsString(),
+                        CategoryResponseDto.class);
+
+        assertThat(createdDto.name()).isEqualTo(categoryRequest.name());
+        assertThat(createdDto.description()).isEqualTo(categoryRequest.description());
     }
 
     @Test
@@ -176,13 +218,19 @@ public class CategoryControllerTest {
                 "About thriller"
         );
 
-        mockMvc.perform(put("/categories/{id}", category.getId())
+        MvcResult mvcResult = mockMvc.perform(put("/categories/{id}", category.getId())
                         .header("Authorization", adminToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(updateRequest.name()))
-                .andExpect(jsonPath("$.description").value(updateRequest.description()));
+                .andReturn();
+
+        CategoryResponseDto updatedDto = objectMapper
+                .readValue(mvcResult.getResponse().getContentAsString(),
+                        CategoryResponseDto.class);
+
+        assertThat(updatedDto.name()).isEqualTo(updateRequest.name());
+        assertThat(updatedDto.description()).isEqualTo(updateRequest.description());
     }
 
     @Test
@@ -208,7 +256,6 @@ public class CategoryControllerTest {
         mockMvc.perform(delete("/categories/{id}", category.getId())
                         .header("Authorization", adminToken))
                 .andExpect(status().isNoContent());
-
     }
 
     @Test

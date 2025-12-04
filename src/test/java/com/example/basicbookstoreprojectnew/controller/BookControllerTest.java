@@ -1,5 +1,6 @@
 package com.example.basicbookstoreprojectnew.controller;
 
+import com.example.basicbookstoreprojectnew.dto.BookDto;
 import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
 import com.example.basicbookstoreprojectnew.model.Book;
@@ -7,7 +8,9 @@ import com.example.basicbookstoreprojectnew.model.Category;
 import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
 import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
@@ -21,16 +24,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@Transactional
 @AutoConfigureMockMvc
 public class BookControllerTest {
 
@@ -47,6 +52,9 @@ public class BookControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
+    private EntityManager entityManager;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     private String userToken;
@@ -56,6 +64,8 @@ public class BookControllerTest {
     private Book book;
 
     private Category category;
+
+    private BookDto bookDto;
 
     @BeforeEach
     void setUp() {
@@ -69,11 +79,6 @@ public class BookControllerTest {
                 "admin@gmail.com",
                 List.of("ADMIN")
         );
-
-        bookRepository.deleteAll();
-        bookRepository.flush();
-        categoryRepository.deleteAll();
-        categoryRepository.flush();
 
         category = new Category();
         category.setName("Programming");
@@ -89,39 +94,64 @@ public class BookControllerTest {
         book.setCategories(new HashSet<>(Set.of(category)));
 
         bookRepository.save(book);
+
+        bookDto = new BookDto(
+                book.getId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getDescription(),
+                book.getIsbn(),
+                book.getPrice(),
+                book.getCoverImage(),
+                book.getCategories().stream()
+                        .map(Category::getId)
+                        .toList()
+        );
     }
+
     @AfterEach
     void tearDown() {
         bookRepository.deleteAll();
-        bookRepository.flush();
         categoryRepository.deleteAll();
-        categoryRepository.flush();
     }
 
     @Test
     @DisplayName("GET /books - should return list of books")
     public void getAllBooks() throws Exception {
 
-        mockMvc.perform(get("/books")
+        MvcResult mvcResult = mockMvc.perform(get("/books")
                         .header("Authorization", userToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].title").value(book.getTitle()))
-                .andExpect(jsonPath("$.content[0].author").value(book.getAuthor()));
+                .andReturn();
+
+        JsonNode root = objectMapper.readTree(mvcResult.getResponse().getContentAsString());
+        JsonNode content = root.get("content");
+
+
+        BookDto[] arrayDto = objectMapper.treeToValue(content, BookDto[].class);
+
+        List<BookDto> actualList = List.of(arrayDto);
+
+        assertThat(actualList).hasSize(1);
+        assertThat(actualList.get(0)).isEqualTo(bookDto);
     }
 
     @Test
     @DisplayName("GET /books/{id}: should return specific book")
     void getBookById_IsExisting() throws Exception {
 
-        mockMvc.perform(get("/books/{id}", book.getId())
+        MvcResult mvcResult = mockMvc.perform(get("/books/{id}", book.getId())
                         .header("Authorization", userToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(book.getTitle()))
-                .andExpect(jsonPath("$.author").value(book.getAuthor()));
+                .andReturn();
+
+        BookDto dto = objectMapper
+                .readValue(mvcResult.getResponse().getContentAsString(), BookDto.class);
+
+        assertThat(dto).isEqualTo(bookDto);
     }
 
-    @Test
+   @Test
     @DisplayName("GET /books/{id}: non-existing book should return 404")
     void getBookId_noneExisting() throws Exception {
 
@@ -144,17 +174,22 @@ public class BookControllerTest {
                 List.of(category.getId())
         );
 
-        mockMvc.perform(post("/books")
+        MvcResult mvcResult = mockMvc.perform(post("/books")
                         .header("Authorization", adminToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(postRequest)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.title").value(postRequest.title()))
-                .andExpect(jsonPath("$.author").value(postRequest.author()))
-                .andExpect(jsonPath("$.description").value(postRequest.description()))
-                .andExpect(jsonPath("$.isbn").value(postRequest.isbn()))
-                .andExpect(jsonPath("$.price").value(postRequest.price().doubleValue()))
-                .andExpect(jsonPath("$.categoryIds[0]").value(category.getId()));
+                .andReturn();
+
+        BookDto arrayDto = objectMapper
+                .readValue(mvcResult.getResponse().getContentAsString(), BookDto.class);
+
+        assertThat(arrayDto.title()).isEqualTo(postRequest.title());
+        assertThat(arrayDto.author()).isEqualTo(postRequest.author());
+        assertThat(arrayDto.description()).isEqualTo(postRequest.description());
+        assertThat(arrayDto.isbn()).isEqualTo(postRequest.isbn());
+        assertThat(arrayDto.price()).isEqualTo(postRequest.price());
+        assertThat(arrayDto.categoryIds()).containsExactlyElementsOf(postRequest.categoryIds());
     }
 
 
@@ -172,15 +207,20 @@ public class BookControllerTest {
                 List.of(category.getId())
         );
 
-        mockMvc.perform(put("/books/{id}", book.getId())
+        MvcResult mvcResult = mockMvc.perform(put("/books/{id}", book.getId())
                         .header("Authorization", adminToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(putRequest)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(putRequest.title()))
-                .andExpect(jsonPath("$.author").value(putRequest.author()))
-                .andExpect(jsonPath("$.description").value(putRequest.description()))
-                .andExpect(jsonPath("$.price").value(putRequest.price().doubleValue()));
+                .andReturn();
+
+        BookDto bookDto = objectMapper
+                .readValue(mvcResult.getResponse().getContentAsString(), BookDto.class);
+
+        assertThat(bookDto.title()).isEqualTo(putRequest.title());
+        assertThat(bookDto.author()).isEqualTo(putRequest.author());
+        assertThat(bookDto.description()).isEqualTo(putRequest.description());
+        assertThat(bookDto.price()).isEqualTo(putRequest.price());
     }
 
     @Test
@@ -214,18 +254,24 @@ public class BookControllerTest {
                 new String[]{"30.00"}
         );
 
-        mockMvc.perform(get("/books/search")
+        MvcResult mvcResult = mockMvc.perform(get("/books/search")
                         .header("Authorization", userToken)
                         .param("title", searchParamsRequest.title())
                         .param("author", searchParamsRequest.author())
                         .param("price", searchParamsRequest.price())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].title").value(book.getTitle()))
-                .andExpect(jsonPath("$.content[0].author").value(book.getAuthor()))
-                .andExpect(jsonPath("$.content[0].categoryIds[0]")
-                        .value(category.getId()));
+                .andReturn();
+
+        JsonNode root = objectMapper.readTree(mvcResult.getResponse().getContentAsString());
+        JsonNode content = root.get("content");
+
+        BookDto[] arrayDto = objectMapper.treeToValue(content, BookDto[].class);
+
+        List<BookDto> listDto = List.of(arrayDto);
+
+        assertThat(listDto).hasSize(1);
+        assertThat(listDto.get(0)).isEqualTo(bookDto);
     }
 
     @Test
@@ -238,14 +284,23 @@ public class BookControllerTest {
                 new String[]{"10000"}
         );
 
-        mockMvc.perform(get("/books/search")
+        MvcResult mvcResult = mockMvc.perform(get("/books/search")
                         .header("Authorization", userToken)
                         .param("title", unknownParameterRequest.title())
                         .param("author", unknownParameterRequest.author())
                         .param("price", unknownParameterRequest.price())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(0)));
+                .andReturn();
+
+        JsonNode root = objectMapper.readTree(mvcResult.getResponse().getContentAsString());
+        JsonNode content = root.get("content");
+
+        BookDto[] arrayDto = objectMapper.treeToValue(content, BookDto[].class);
+
+        List<BookDto> listDto = List.of(arrayDto);
+
+        assertThat(listDto).isEmpty();
     }
 
     @Test
