@@ -4,7 +4,6 @@ import com.example.basicbookstoreprojectnew.model.ShoppingCart;
 import com.example.basicbookstoreprojectnew.model.User;
 import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
 import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
@@ -43,7 +42,7 @@ public class ShoppingCartRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        userRepository.deleteAll();;
+        userRepository.deleteAll();
     }
 
     @Test
