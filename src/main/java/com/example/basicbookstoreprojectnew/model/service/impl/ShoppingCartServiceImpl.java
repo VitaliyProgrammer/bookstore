@@ -2,6 +2,7 @@ package com.example.basicbookstoreprojectnew.model.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.CartItemResponseDto;
 import com.example.basicbookstoreprojectnew.dto.ShoppingCartResponseDto;
+import com.example.basicbookstoreprojectnew.exception.EntityNotFoundException;
 import com.example.basicbookstoreprojectnew.exception.ShoppingCartNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.CartItemMapper;
 import com.example.basicbookstoreprojectnew.mapper.ShoppingCartMapper;
@@ -14,7 +15,6 @@ import com.example.basicbookstoreprojectnew.model.repository.CartItemRepository;
 import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
 import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.model.service.ShoppingCartService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +48,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartResponseDto addBookToShoppingCart(Long id, Long bookId, int quantity) {
+
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(id)
                 .orElseThrow(
                         () -> new ShoppingCartNotFoundException("Shopping cart can`t to find!: "));
@@ -67,6 +68,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     newCartItem.setShoppingCart(shoppingCart);
                     newCartItem.setBook(book);
                     newCartItem.setQuantity(quantity);
+
+                    shoppingCart.getCartItems().add(newCartItem);
                     return newCartItem;
                 });
 
