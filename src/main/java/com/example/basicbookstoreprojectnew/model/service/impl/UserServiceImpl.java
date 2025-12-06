@@ -4,6 +4,7 @@ import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
+import com.example.basicbookstoreprojectnew.exception.EntityNotFoundException;
 import com.example.basicbookstoreprojectnew.exception.RegistrationException;
 import com.example.basicbookstoreprojectnew.mapper.UserMapper;
 import com.example.basicbookstoreprojectnew.model.Role;
@@ -15,7 +16,6 @@ import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartReposit
 import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
 import com.example.basicbookstoreprojectnew.model.service.UserService;
 import com.example.basicbookstoreprojectnew.security.JwtUtil;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
