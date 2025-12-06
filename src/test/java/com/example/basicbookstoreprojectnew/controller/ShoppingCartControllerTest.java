@@ -1,6 +1,8 @@
 package com.example.basicbookstoreprojectnew.controller;
 
 import com.example.basicbookstoreprojectnew.dto.AddToCartRequestDto;
+import com.example.basicbookstoreprojectnew.dto.CartItemResponseDto;
+import com.example.basicbookstoreprojectnew.dto.ShoppingCartResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UpdateCartItemRequestDto;
 import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.CartItem;
@@ -14,6 +16,7 @@ import com.example.basicbookstoreprojectnew.security.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,13 +25,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -66,11 +70,6 @@ public class ShoppingCartControllerTest {
     @BeforeEach
     void setUp() {
 
-        cartItemRepository.deleteAll();
-        shoppingCartRepository.deleteAll();
-        bookRepository.deleteAll();
-        userRepository.deleteAll();
-
         User user = new User();
         user.setEmail("user@test.com");
         user.setPassword("1234567890");
@@ -96,15 +95,31 @@ public class ShoppingCartControllerTest {
         shoppingCartRepository.save(shoppingCart);
     }
 
+    @AfterEach
+    void tearDown() {
+        cartItemRepository.deleteAll();
+        shoppingCartRepository.deleteAll();
+        bookRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
+
     @Test
     @DisplayName("GET /cart - should return shopping cart")
     void getShoppingCart() throws Exception {
 
-        mockMvc.perform(get("/cart")
+        MvcResult mvcResult = mockMvc.perform(get("/cart")
                         .header("Authorization", userToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value(savedUser.getId()))
-                .andExpect(jsonPath("$.cartItems").isArray());
+                .andReturn();
+
+        ShoppingCartResponseDto shoppingCartResponse =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
+                        ShoppingCartResponseDto.class);
+
+        assertThat(shoppingCartResponse.userId()).isEqualTo(savedUser.getId());
+        assertThat(shoppingCartResponse.cartItems()).isNotNull();
+        assertThat(shoppingCartResponse.cartItems()).isEmpty();
     }
 
     @Test
@@ -115,13 +130,23 @@ public class ShoppingCartControllerTest {
                 savedBook.getId(), 5
         );
 
-        mockMvc.perform(post("/cart")
+        MvcResult mvcResult = mockMvc.perform(post("/cart")
                         .header("Authorization", userToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(addBookRequest)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.cartItems[0].bookId").value(savedBook.getId()))
-                .andExpect(jsonPath("$.cartItems[0].quantity").value(5));
+                .andReturn();
+
+        ShoppingCartResponseDto shoppingCartResponse =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
+                        ShoppingCartResponseDto.class);
+
+        assertThat(shoppingCartResponse.cartItems()).hasSize(1);
+
+        CartItemResponseDto cartItemResponse = shoppingCartResponse.cartItems().get(0);
+
+        assertThat(cartItemResponse.bookId()).isEqualTo(savedBook.getId());
+        assertThat(cartItemResponse.quantity()).isEqualTo(5);
     }
 
     @Test
@@ -140,12 +165,19 @@ public class ShoppingCartControllerTest {
         UpdateCartItemRequestDto updateQuantityRequest =
                 new UpdateCartItemRequestDto(10);
 
-        mockMvc.perform(put("/cart/cart-items/" + cartItem.getId())
+        MvcResult mvcResult = mockMvc.perform(put("/cart/cart-items/" + cartItem.getId())
                         .header("Authorization", userToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateQuantityRequest)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.quantity").value(10));
+                .andReturn();
+
+        CartItemResponseDto updatedCartItem =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
+                        CartItemResponseDto.class);
+
+        assertThat(updatedCartItem.quantity()).isEqualTo(10);
+        assertThat(updatedCartItem.bookId()).isEqualTo(savedBook.getId());
     }
 
     @Test

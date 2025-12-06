@@ -7,6 +7,7 @@ import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-@Transactional
 public class ShoppingCartRepositoryTest {
 
     @Autowired
@@ -39,6 +39,11 @@ public class ShoppingCartRepositoryTest {
         user.setLastName("Test");
 
         savedUser = userRepository.save(user);
+    }
+
+    @AfterEach
+    void tearDown() {
+        userRepository.deleteAll();;
     }
 
     @Test
