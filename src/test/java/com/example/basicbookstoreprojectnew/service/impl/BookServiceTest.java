@@ -4,19 +4,18 @@ import com.example.basicbookstoreprojectnew.dto.BookDto;
 import com.example.basicbookstoreprojectnew.dto.BookDtoCategoryResponse;
 import com.example.basicbookstoreprojectnew.dto.BookSearchParametersDto;
 import com.example.basicbookstoreprojectnew.dto.CreateBookRequestDto;
-import com.example.basicbookstoreprojectnew.exception.EntityNotFoundException;
+import com.example.basicbookstoreprojectnew.exception.BookNotFoundException;
+import com.example.basicbookstoreprojectnew.exception.CategoryNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.BookMapper;
 import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.Category;
-import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
-import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
-import com.example.basicbookstoreprojectnew.model.repository.impl.SpecificationBuilderImpl;
-import com.example.basicbookstoreprojectnew.model.service.impl.BookServiceImpl;
+import com.example.basicbookstoreprojectnew.repository.BookRepository;
+import com.example.basicbookstoreprojectnew.repository.CategoryRepository;
+import com.example.basicbookstoreprojectnew.repository.impl.SpecificationBuilderImpl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -132,7 +131,7 @@ public class BookServiceTest {
         );
 
         when(categoryRepository.findById(999L)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, () -> bookServiceImpl.save(bookRequestDto));
+        assertThrows(BookNotFoundException.class, () -> bookServiceImpl.save(bookRequestDto));
     }
 
     @Test
@@ -167,7 +166,7 @@ public class BookServiceTest {
     void findById_bookNotFound() {
 
         when(bookRepository.findById(10000L)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, () -> bookServiceImpl.findById(10000L));
+        assertThrows(BookNotFoundException.class, () -> bookServiceImpl.findById(10000L));
     }
 
     @Test
@@ -212,7 +211,7 @@ public class BookServiceTest {
 
         when(bookRepository.findById(9999L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class,
+        assertThrows(BookNotFoundException.class,
                 () -> bookServiceImpl.updateBook(9999L, saveBook));
     }
 
@@ -295,7 +294,7 @@ public class BookServiceTest {
 
         when(categoryRepository.findById(9999L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class,
+        assertThrows(CategoryNotFoundException.class,
                 () -> bookServiceImpl.findAllBooksByCategoryId(9999L,
                         PageRequest.of(0, 10)));
     }
@@ -319,6 +318,6 @@ public class BookServiceTest {
 
         when(bookRepository.findById(9999L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> bookServiceImpl.deleteBook(9999L));
+        assertThrows(BookNotFoundException.class, () -> bookServiceImpl.deleteBook(9999L));
     }
 }

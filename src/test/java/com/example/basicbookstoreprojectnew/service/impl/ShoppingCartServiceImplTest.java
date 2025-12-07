@@ -2,19 +2,18 @@ package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.CartItemResponseDto;
 import com.example.basicbookstoreprojectnew.dto.ShoppingCartResponseDto;
-import com.example.basicbookstoreprojectnew.exception.EntityNotFoundException;
 import com.example.basicbookstoreprojectnew.exception.ShoppingCartNotFoundException;
+import com.example.basicbookstoreprojectnew.exception.UserNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.CartItemMapper;
 import com.example.basicbookstoreprojectnew.mapper.ShoppingCartMapper;
 import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.CartItem;
 import com.example.basicbookstoreprojectnew.model.ShoppingCart;
 import com.example.basicbookstoreprojectnew.model.User;
-import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
-import com.example.basicbookstoreprojectnew.model.repository.CartItemRepository;
-import com.example.basicbookstoreprojectnew.model.repository.ShoppingCartRepository;
-import com.example.basicbookstoreprojectnew.model.repository.UserRepository;
-import com.example.basicbookstoreprojectnew.model.service.impl.ShoppingCartServiceImpl;
+import com.example.basicbookstoreprojectnew.repository.BookRepository;
+import com.example.basicbookstoreprojectnew.repository.CartItemRepository;
+import com.example.basicbookstoreprojectnew.repository.ShoppingCartRepository;
+import com.example.basicbookstoreprojectnew.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -124,7 +123,7 @@ public class ShoppingCartServiceImplTest {
 
         when(userRepository.findById(9999L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class,
+        assertThrows(UserNotFoundException.class,
                 () -> shoppingCartServiceImpl.getShoppingCartByUser(9999L));
     }
 
