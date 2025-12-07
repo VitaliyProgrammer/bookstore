@@ -67,6 +67,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     newCartItem.setShoppingCart(shoppingCart);
                     newCartItem.setBook(book);
                     newCartItem.setQuantity(quantity);
+
+                    shoppingCart.getCartItems().add(newCartItem);
                     return newCartItem;
                 });
 
