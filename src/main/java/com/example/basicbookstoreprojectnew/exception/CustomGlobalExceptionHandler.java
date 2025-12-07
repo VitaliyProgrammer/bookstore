@@ -72,15 +72,37 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleEntityNotFoundException(
-            EntityNotFoundException entityNotFoundException) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleUserNotFoundException(
+            UserNotFoundException userNotFoundException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", entityNotFoundException.getMessage());
+        body.put("error", userNotFoundException.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleBookNotFoundException(
+            BookNotFoundException bookNotFoundException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", bookNotFoundException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(BookAlreadyExistsException.class)
+    public ResponseEntity<Object> handleBookAlreadyExistsException(
+            BookAlreadyExistsException bookAlreadyExistsException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", bookAlreadyExistsException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 
     @ExceptionHandler(ShoppingCartNotFoundException.class)
@@ -127,17 +149,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
     }
 
-    @ExceptionHandler(BookAlreadyExistsException.class)
-    public ResponseEntity<Object> handleBookAlreadyExists(
-            BookAlreadyExistsException bookAlreadyExistsException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", bookAlreadyExistsException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
-    }
-
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<Object> handleJwtIsValidOrNotExists(JwtException jwtException) {
 
@@ -148,13 +159,24 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
     }
 
-    @ExceptionHandler(CategoryAlreadyExistsException.class)
-    public ResponseEntity<Object> handleCategoryAlreadyExists(
-            CategoryAlreadyExistsException categoryException) {
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleCategoryNotFoundException(
+            CategoryNotFoundException categoryNotFoundException) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", categoryException.getMessage());
+        body.put("error", categoryNotFoundException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(CategoryAlreadyExistsException.class)
+    public ResponseEntity<Object> handleCategoryAlreadyExists(
+            CategoryAlreadyExistsException categoryAlreadyExistsException) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().format(formatter));
+        body.put("error", categoryAlreadyExistsException.getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }

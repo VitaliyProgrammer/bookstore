@@ -2,14 +2,12 @@ package com.example.basicbookstoreprojectnew.service.impl;
 
 import com.example.basicbookstoreprojectnew.dto.CategoryRequestDto;
 import com.example.basicbookstoreprojectnew.dto.CategoryResponseDto;
-import com.example.basicbookstoreprojectnew.exception.EntityNotFoundException;
+import com.example.basicbookstoreprojectnew.exception.CategoryNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.CategoryMapper;
 import com.example.basicbookstoreprojectnew.model.Category;
-import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
-import com.example.basicbookstoreprojectnew.model.service.impl.CategoryServiceImpl;
+import com.example.basicbookstoreprojectnew.repository.CategoryRepository;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -101,7 +99,7 @@ public class CategoryServiceTest {
 
         when(categoryRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> categoryServiceImpl.getById(999L));
+        assertThrows(CategoryNotFoundException.class, () -> categoryServiceImpl.getById(999L));
 
         verify(categoryRepository).findById(999L);
         verifyNoInteractions(categoryMapper);
@@ -171,7 +169,7 @@ public class CategoryServiceTest {
 
         when(categoryRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class,
+        assertThrows(CategoryNotFoundException.class,
                 () -> categoryServiceImpl.update(999L, categoryRequest));
 
         verify(categoryRepository).findById(999L);
@@ -199,7 +197,7 @@ public class CategoryServiceTest {
 
         when(categoryRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class,
+        assertThrows(CategoryNotFoundException.class,
                 () -> categoryServiceImpl.deleteById(999L));
 
         verify(categoryRepository).findById(999L);

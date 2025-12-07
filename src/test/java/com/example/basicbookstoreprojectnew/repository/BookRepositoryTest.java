@@ -1,10 +1,8 @@
 package com.example.basicbookstoreprojectnew.repository;
 
-import com.example.basicbookstoreprojectnew.exception.EntityNotFoundException;
+import com.example.basicbookstoreprojectnew.exception.CategoryNotFoundException;
 import com.example.basicbookstoreprojectnew.model.Book;
 import com.example.basicbookstoreprojectnew.model.Category;
-import com.example.basicbookstoreprojectnew.model.repository.BookRepository;
-import com.example.basicbookstoreprojectnew.model.repository.CategoryRepository;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -117,7 +115,7 @@ public class BookRepositoryTest {
         Long nonExistingCategoryById = 9999L;
 
         assertThrows(Exception.class, () -> categoryRepository.findById(nonExistingCategoryById)
-                .orElseThrow(() -> new EntityNotFoundException(
+                .orElseThrow(() -> new CategoryNotFoundException(
                         "Category with id " + nonExistingCategoryById + " not found!"))
         );
     }
