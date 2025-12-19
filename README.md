@@ -17,9 +17,7 @@
 ![Testing](https://img.shields.io/badge/Testing-JUnit%205%20%7C%20Mockito%205.7.0%20%7C%20Integration-blueviolet)
 ![Swagger](https://img.shields.io/badge/Swagger%20UI-5.13.0-85EA2D)
 
-<br>
 
----
 ## 📌 Introduction
 
 **BookStore** is a fully-featured application developed as part
@@ -47,9 +45,7 @@ a **clean, scalable, and secure architecture** that follows production-grade pri
 - mocking and integration testing
 - MySQL database
 
-<br>
 
----
 ## 🎯 Motivation
 
 This project was motivated by the desire to build something more complex than a basic REST API -
@@ -73,9 +69,7 @@ During development, I faced and solved challenges related to transaction managem
 DTO design, Spring Security pitfalls, JPA lazy loading behavior, Spring Boot Testing pitfalls, and error handling.
 These hurdles significantly strengthened my understanding of back-end engineering.
 
-<br>
 
----
 ## 🚀 What this project demonstrates
 
 Bookstore is not just a learning exercise - it is a demonstration of engineering mindset:
@@ -90,9 +84,7 @@ Bookstore is not just a learning exercise - it is a demonstration of engineering
 The project became my practical playground for experimenting with architecture,
 security, database, modeling, and writing code that meets production-quality standards.
 
-<br>
 
----
 ## 📌 Features / Functionality
 
 This BookStore project demonstrates core back-end functionalities of a modern
@@ -132,7 +124,6 @@ a foundation for production-level services.
 - Role-based access per endpoint
 - Service-level permission checks
 
-
 🧪 **Testing**
 - Mocking-based service tests
 - Integration tests simulating real workflows
@@ -142,9 +133,6 @@ Overall, this section  demonstrates how the back-end supports a full shopping ex
 **`register → login → browse catalog → add books → manage shopping cart → place order`**
 
 
-<br>
-
----
 ## 🏗 Architecture & Technology Stack
 This project is designed with **production-grade architecture** in mind.  
 It follows a **layered architecture** pattern to separate concerns and ensure maintainability:
@@ -175,12 +163,10 @@ It follows a **layered architecture** pattern to separate concerns and ensure ma
 | Layered Architecture            | Maintainable, scalable system                      |
 | Spring Boot Testing             | Mock and integration testing of application layers |
 
-<br>
 
-***   
 ## UML Diagram  
 ![UML Diagram](UML-diagram-bookstore.drawio.png)
-***
+
 ## 🛠 Local Setup / Getting Started
 Follow these steps to run the BookStore application locally on your machine.
  
@@ -226,16 +212,14 @@ http://localhost:8080
 All endpoints are documented in Swagger UI:
 [Open Swagger UI](http://localhost:8080/swagger-ui/index.html)
 
-***
+
 ## 🎥 Video Presentation
 A short video walk through of the BookStore application, including authentication
 Swagger API demonstration, and order workflow, is available here:
 
 👉 https://www.loom.com/share/0042f5def4ba49178c5b711cf35212fc
 
-<br>
-                       
-***
+
 ## 📌 Final Notes
 This project reflects my approach to back-end engineering: thoughtful architecture,
 clear separation of concerns, security-first design, and realistic workflows. It is
