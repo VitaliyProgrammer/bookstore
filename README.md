@@ -6,16 +6,18 @@
 ![JWT](https://img.shields.io/badge/JJWT-0.11.5-orange)
 ![MySQL](https://img.shields.io/badge/MySQL-8.3-FFD700)
 ![Hibernate](https://img.shields.io/badge/Hibernate-6.4.4.Final-4B0082)
-![Liquibase](https://img.shields.io/badge/Liquibase-4.24.0-blue)
-![Architecture](https://img.shields.io/badge/Architecture-Layered-brightgreen)
+![Liquibase](https://img.shields.io/badge/Liquibase-4.24-blue)
+![Architecture](https://img.shields.io/badge/Architecture-Layered-lightgreen)
 ![DTO](https://img.shields.io/badge/DTO-Mapping-yellow)
 ![Specification](https://img.shields.io/badge/Specification-Pattern-lightgrey)
 ![Exception](https://img.shields.io/badge/Exception-Handling-red)
 ![Repository](https://img.shields.io/badge/Repository-Pattern-purple)
 ![Security](https://img.shields.io/badge/Security-Pattern-teal)
 ![Validation](https://img.shields.io/badge/Validation-Spring%20Validation-green)
-![Testing](https://img.shields.io/badge/Testing-JUnit%205%20%7C%20Mockito%205.7.0%20%7C%20Integration-blueviolet)
-![Swagger](https://img.shields.io/badge/Swagger%20UI-5.13.0-85EA2D)
+![Testing](https://img.shields.io/badge/Testing-JUnit%205%20%7C%20Mockito%205.7%20%7C%20Integration-blueviolet)
+![Docker](https://img.shields.io/badge/Docker-27.1.1-blue)
+![Docker Compose](https://img.shields.io/badge/Docker_Compose-2.29.1-skyblue)
+![Swagger](https://img.shields.io/badge/Swagger%20UI-5.13-85EA2D)
 
 
 ## 📌 Introduction
@@ -148,24 +150,44 @@ It follows a **layered architecture** pattern to separate concerns and ensure ma
 
 
 ## Technology Stack
-| Technology / Tool               | Purpose                                            |
-|---------------------------------|----------------------------------------------------|
-| Java 17                         | Core programming language                          |
-| Spring Boot 3.2                 | Application framework                              |
-| Spring Security + JWT           | Authentication & authorization                     |
-| MySQL                           | Database                                           |
-| Spring Data JPA                 | ORM / repository abstraction                       |
-| Validation (Spring Validation)  | DTO input validation                               |
-| Liquibase                       | Database migration & versioning                    |
-| Mocking & Integration Testing   | Ensuring code correctness and workflow simulation  |
-| SpecificationProvider & Builder | Dynamic filtering/search in catalog                |
-| Repository Pattern              | Clean separation of data access logic              |
-| Layered Architecture            | Maintainable, scalable system                      |
-| Spring Boot Testing             | Mock and integration testing of application layers |
+| Technology / Tool               | Version        | Purpose                                                                                                      |
+|---------------------------------|----------------|--------------------------------------------------------------------------------------------------------------|
+| Java 19                         | 19             | Core programming language                                                                                    |
+| Spring Boot 3.2                 | 3.2.4          | Application framework                                                                                        |
+| Spring Security + JWT           | 6.2.3 + 0.11.5 | Authentication & authorization                                                                               |
+| MySQL                           | 8.3            | Database                                                                                                     |
+| Hibernate                       | 6.4.4.Final    | ORM framework; handles database persistence, mapping Java entities to database tables , and query generation |
+| Liquibase                       | 4.24           | Database migration & versioning                                                                              |
+| Validation (Spring Validation)  |                | DTO input validation                                                                                         |
+| SpecificationProvider & Builder |                | Dynamic filtering/search in catalog                                                                          |
+| Repository Pattern              |                | Clean separation of data access logic                                                                        |
+| Layered Architecture            |                | Maintainable, scalable system                                                                                |
+| Mocking & Integration Testing   | 5.7            | Mock and integration testing of application layers                                                           |
+| Docker                          | 27.1.1         | Containerization of application & MySQL DB                                                                   |
+| Docker Compose                  | 2.29.1         | Orchestrates containers                                                                                      |
+| Swagger                         | 5.13           | API documentation & testing                                                                                  |
 
 
 ## UML Diagram  
 ![UML Diagram](UML-diagram-bookstore.drawio.png)
+
+## 🐳 Infrastructure & Deployment
+The application is fully containerized using Docker to ensure a consistent runtime
+environment across development and deployment stages.
+
+- **Docker**   
+Used to package the Spring Boot application with a predefined Java runtime.
+ 
+    
+- **Docker Compose**  
+Orchestrates the startup of the application and the MySQL database.
+
+
+- **Docker Container**  
+Provides a ready-to-use database instance for local development and testing.
+
+This setup allows the application to be started with a single command and reflects
+real-world production deployment practices.
 
 ## 🛠 Local Setup / Getting Started
 Follow these steps to run the BookStore application locally on your machine.
