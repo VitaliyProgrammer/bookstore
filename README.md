@@ -152,87 +152,99 @@ It follows a **layered architecture** pattern to separate concerns and ensure ma
 ## Technology Stack
 | Technology / Tool               | Version        | Purpose                                                                                                      |
 |---------------------------------|----------------|--------------------------------------------------------------------------------------------------------------|
-| Java 19                         | 19             | Core programming language                                                                                    |
-| Spring Boot 3.2                 | 3.2.4          | Application framework                                                                                        |
+| Java                            | 19             | Core programming language                                                                                    |
+| Spring Boot                     | 3.2.4          | Application framework                                                                                        |
 | Spring Security + JWT           | 6.2.3 + 0.11.5 | Authentication & authorization                                                                               |
 | MySQL                           | 8.3            | Database                                                                                                     |
 | Hibernate                       | 6.4.4.Final    | ORM framework; handles database persistence, mapping Java entities to database tables , and query generation |
-| Liquibase                       | 4.24           | Database migration & versioning                                                                              |
-| Validation (Spring Validation)  |                | DTO input validation                                                                                         |
-| SpecificationProvider & Builder |                | Dynamic filtering/search in catalog                                                                          |
-| Repository Pattern              |                | Clean separation of data access logic                                                                        |
-| Layered Architecture            |                | Maintainable, scalable system                                                                                |
+| Liquibase                       | 4.24           | Database migration & versioning                                                                              |                                                                                                                                                                         |
 | Mocking & Integration Testing   | 5.7            | Mock and integration testing of application layers                                                           |
 | Docker                          | 27.1.1         | Containerization of application & MySQL DB                                                                   |
 | Docker Compose                  | 2.29.1         | Orchestrates containers                                                                                      |
 | Swagger                         | 5.13           | API documentation & testing                                                                                  |
 
+## Design Patterns && Architecture Concepts
+| Concept / Pattern               | Purpose                               |
+|---------------------------------|---------------------------------------|
+| Layered Architecture            | Maintainable, scalable system         |
+| Repository Pattern              | Clean separation of data access logic |
+| SpecificationProvider & Builder | Dynamic filtering/search in catalog   |
+| Validation (Spring Validation)  | DTO input validation                  |
 
 ## UML Diagram  
 ![UML Diagram](UML-diagram-bookstore.drawio.png)
 
 ## 🐳 Infrastructure & Deployment
-The application is fully containerized using Docker to ensure a consistent runtime
-environment across development and deployment stages.
+The application is fully containerized using Docker and Docker Compose, 
+allowing anyone to run the project without manual environment configuration.
+
+
 
 - **Docker**   
-Used to package the Spring Boot application with a predefined Java runtime.
+Used to package the Spring Boot application with a predefined Java runtime environment.
  
     
 - **Docker Compose**  
-Orchestrates the startup of the application and the MySQL database.
+Orchestrates multiple containers:
+- Spring Boot Application
+- MySQL database
 
-
-- **Docker Container**  
-Provides a ready-to-use database instance for local development and testing.
-
-This setup allows the application to be started with a single command and reflects
-real-world production deployment practices.
+This approach ensures consistent behavior across different machines 
+and reflects real-world production deployment practices.
 
 ## 🛠 Local Setup / Getting Started
-Follow these steps to run the BookStore application locally on your machine.
+The BookStore application is fully containerized and can be started locally
+without manual database setup, liquibase configuration, or environment tuning.
+
+All required dependencies(Spring Boot application, MySQL database, liquibase migrations)
+are preconfigured and run inside Docker containers.
  
 ### 1. Prerequisites
 Make sure you have the following software installed:
 
-- **Java 19.0.1** ([Java](https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html))
-- **Maven 3.x** ([Maven](https://maven.apache.org/download.cgi))
-- **MySQL 8.3** ([MySQL](https://dev.mysql.com/downloads/mysql/))
-- Optionally, a tool to view Swagger UI (browser)
+- **Docker 27.1.1** 
+- **Docker Compose 2.29.1** 
+- **A web browser (to access Swagger UI)**
+
+Check installed versions:
+```bash
+docker --version
+docker compose version
+```
 
 ### 2. Clone the Repository  
  ```bash  
   git clone https://github.com/VitaliyProgrammer/bookstore.git
   cd bookstore
   ```
-### 3. Configure the DataBase
-Create a MySQL database: 
-```bash
-CREATE DATABASE bookstore_db
-```
-                                                   
-<br>Update the ```bash src/main/resources/application.properties```: 
-```bash
-spring.datasource.url=jdbc:mysql://localhost:3306/bookstore_db
-spring.datasource.username=YOUR_DB_USERNAME
-spring.datasource.password=YOUR_DB_PASSWORD   
-spring.jpa.hibernate.ddl-auto=update
-```
-The project uses Spring Boot 3.2.4, Hibernate 6.4.4 and Liquibase 4.24.0
-for database management and migrations.
 
-## 4. Build and Run the Application
-```bash
-mvn clean install  
-mvn spring-boot:run
+▶️Run the Application (Docker)
+Start the full application stack using Docker Compose:
+```bash 
+docker compose up --build 
 ```
-The application will start on:  
+
+This command will: 
+- **build the Spring Boot application image**
+- **start the MySQL database container**
+- **automatically apply liquibase migrations**
+- **launch the application in a ready-to-use state** 
+
+🛑 Stop the Application
 ```bash
-http://localhost:8080
+docker compose down
 ```
+
+📦 Docker Image
+The application image is available on Docker Hub: 
+```bash
+docker pull vitaliyjavaprog/bookstore:1.0.1
+```
+
 ## 📘 API Documentation
 All endpoints are documented in Swagger UI:
 [Open Swagger UI](http://localhost:8080/swagger-ui/index.html)
+                                                   
 
 
 ## 🎥 Video Presentation
