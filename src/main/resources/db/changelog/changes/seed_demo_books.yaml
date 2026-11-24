@@ -1,0 +1,626 @@
+databaseChangeLog:
+  - changeSet:
+      id: seed-demo-genres-and-books
+      author: vitaliy
+      # Demo catalogue for the storefront: 10 genres x 6 books. Titles and authors are real;
+      # ISBNs use the 979-99 prefix and are placeholders, not real editions.
+      # Skipped in tests (contexts=test) so test data stays under the tests' control.
+      context: "!test"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Українська класика" }
+              - column: { name: description, value: "Твори, з яких починається українська література" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Сучасна українська проза" }
+              - column: { name: description, value: "Найкращі романи українських авторів останніх десятиліть" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Поезія" }
+              - column: { name: description, value: "Вірші й поеми українських поетів" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Фентезі" }
+              - column: { name: description, value: "Чарівні світи, магія і великі пригоди" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Наукова фантастика" }
+              - column: { name: description, value: "Космос, майбутнє і технології" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Детективи і трилери" }
+              - column: { name: description, value: "Загадки, розслідування і напружені сюжети" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Історичний роман" }
+              - column: { name: description, value: "Минуле, яке оживає на сторінках" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Нон-фікшн" }
+              - column: { name: description, value: "Історія, наука і суспільство: книжки, що пояснюють світ" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Психологія і саморозвиток" }
+              - column: { name: description, value: "Книжки про звички, мислення і внутрішню рівновагу" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "Дитячі книги" }
+              - column: { name: description, value: "Казки й пригоди для юних читачів" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Кобзар" }
+              - column: { name: author, value: "Тарас Шевченко" }
+              - column: { name: isbn, value: "9799900001019" }
+              - column: { name: price, valueNumeric: 420.00 }
+              - column: { name: description, value: "Головна поетична книжка України: поеми й вірші про волю, долю народу і людську гідність." }
+              - column: { name: cover_image, value: "/covers/classic-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Лісова пісня" }
+              - column: { name: author, value: "Леся Українка" }
+              - column: { name: isbn, value: "9799900001026" }
+              - column: { name: price, valueNumeric: 260.00 }
+              - column: { name: description, value: "Драма-феєрія про кохання лісової красуні Мавки і сільського хлопця Лукаша." }
+              - column: { name: cover_image, value: "/covers/classic-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Тіні забутих предків" }
+              - column: { name: author, value: "Михайло Коцюбинський" }
+              - column: { name: isbn, value: "9799900001033" }
+              - column: { name: price, valueNumeric: 240.00 }
+              - column: { name: description, value: "Повість про кохання Івана й Марічки на тлі гуцульських звичаїв і карпатської природи." }
+              - column: { name: cover_image, value: "/covers/classic-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Захар Беркут" }
+              - column: { name: author, value: "Іван Франко" }
+              - column: { name: isbn, value: "9799900001040" }
+              - column: { name: price, valueNumeric: 280.00 }
+              - column: { name: description, value: "Історична повість про громаду Тухлі, що стала на захист рідних гір від монгольської навали." }
+              - column: { name: cover_image, value: "/covers/classic-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Кайдашева сім'я" }
+              - column: { name: author, value: "Іван Нечуй-Левицький" }
+              - column: { name: isbn, value: "9799900001057" }
+              - column: { name: price, valueNumeric: 250.00 }
+              - column: { name: description, value: "Комічна і гірка повість про родину, яка не може поділити хату, грушу й город." }
+              - column: { name: cover_image, value: "/covers/classic-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Земля" }
+              - column: { name: author, value: "Ольга Кобилянська" }
+              - column: { name: isbn, value: "9799900001064" }
+              - column: { name: price, valueNumeric: 290.00 }
+              - column: { name: description, value: "Роман про те, як жага землі руйнує селянську родину Федорчуків." }
+              - column: { name: cover_image, value: "/covers/classic-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Felix Austria" }
+              - column: { name: author, value: "Софія Андрухович" }
+              - column: { name: isbn, value: "9799900002016" }
+              - column: { name: price, valueNumeric: 390.00 }
+              - column: { name: description, value: "Станиславів початку XX століття, служниця Стефа і її складна залежність від господині Аделі." }
+              - column: { name: cover_image, value: "/covers/modern-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Інтернат" }
+              - column: { name: author, value: "Сергій Жадан" }
+              - column: { name: isbn, value: "9799900002023" }
+              - column: { name: price, valueNumeric: 350.00 }
+              - column: { name: description, value: "Учитель Паша вирушає через охоплене війною місто, щоб забрати племінника з інтернату." }
+              - column: { name: cover_image, value: "/covers/modern-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Солодка Даруся" }
+              - column: { name: author, value: "Марія Матіос" }
+              - column: { name: isbn, value: "9799900002030" }
+              - column: { name: price, valueNumeric: 320.00 }
+              - column: { name: description, value: "Драма жінки з буковинського села, чия доля зламана страшними подіями XX століття." }
+              - column: { name: cover_image, value: "/covers/modern-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Музей покинутих секретів" }
+              - column: { name: author, value: "Оксана Забужко" }
+              - column: { name: isbn, value: "9799900002047" }
+              - column: { name: price, valueNumeric: 520.00 }
+              - column: { name: description, value: "Масштабний роман про три покоління і таємниці, які історія намагалась стерти." }
+              - column: { name: cover_image, value: "/covers/modern-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Танці з кістками" }
+              - column: { name: author, value: "Андрій Семянків" }
+              - column: { name: isbn, value: "9799900002054" }
+              - column: { name: price, valueNumeric: 310.00 }
+              - column: { name: description, value: "Медичний трилер про лікаря, якого втягують у небезпечну схему з пересадкою органів." }
+              - column: { name: cover_image, value: "/covers/modern-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Рекреації" }
+              - column: { name: author, value: "Юрій Андрухович" }
+              - column: { name: isbn, value: "9799900002061" }
+              - column: { name: price, valueNumeric: 280.00 }
+              - column: { name: description, value: "Карнавальна повість про чотирьох поетів на фестивалі у вигаданому галицькому містечку." }
+              - column: { name: cover_image, value: "/covers/modern-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Маруся Чурай" }
+              - column: { name: author, value: "Ліна Костенко" }
+              - column: { name: isbn, value: "9799900003013" }
+              - column: { name: price, valueNumeric: 300.00 }
+              - column: { name: description, value: "Історичний роман у віршах про легендарну співачку з Полтави XVII століття." }
+              - column: { name: cover_image, value: "/covers/poetry-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Палімпсести" }
+              - column: { name: author, value: "Василь Стус" }
+              - column: { name: isbn, value: "9799900003020" }
+              - column: { name: price, valueNumeric: 340.00 }
+              - column: { name: description, value: "Вірші, написані в ув'язненні: про свободу духу, біль і незламність." }
+              - column: { name: cover_image, value: "/covers/poetry-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Сонячні кларнети" }
+              - column: { name: author, value: "Павло Тичина" }
+              - column: { name: isbn, value: "9799900003037" }
+              - column: { name: price, valueNumeric: 220.00 }
+              - column: { name: description, value: "Перша збірка поета, сповнена музики, світла і свіжості образів." }
+              - column: { name: cover_image, value: "/covers/poetry-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Зелена Євангелія" }
+              - column: { name: author, value: "Богдан-Ігор Антонич" }
+              - column: { name: isbn, value: "9799900003044" }
+              - column: { name: price, valueNumeric: 230.00 }
+              - column: { name: description, value: "Поезія природи, весни і вічного кругообігу життя." }
+              - column: { name: cover_image, value: "/covers/poetry-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Тиша і грім" }
+              - column: { name: author, value: "Василь Симоненко" }
+              - column: { name: isbn, value: "9799900003051" }
+              - column: { name: price, valueNumeric: 210.00 }
+              - column: { name: description, value: "Збірка шістдесятника про любов до України, правду і людську гідність." }
+              - column: { name: cover_image, value: "/covers/poetry-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "На крилах пісень" }
+              - column: { name: author, value: "Леся Українка" }
+              - column: { name: isbn, value: "9799900003068" }
+              - column: { name: price, valueNumeric: 200.00 }
+              - column: { name: description, value: "Перша збірка поетеси з циклами «Сім струн» і «Сльози-перли»." }
+              - column: { name: cover_image, value: "/covers/poetry-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Гобіт, або Туди і звідти" }
+              - column: { name: author, value: "Дж. Р. Р. Толкін" }
+              - column: { name: isbn, value: "9799900004010" }
+              - column: { name: price, valueNumeric: 380.00 }
+              - column: { name: description, value: "Більбо Торбин вирушає з гномами по скарб, який стереже дракон Смауг." }
+              - column: { name: cover_image, value: "/covers/fantasy-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Гра престолів" }
+              - column: { name: author, value: "Джордж Р. Р. Мартін" }
+              - column: { name: isbn, value: "9799900004027" }
+              - column: { name: price, valueNumeric: 560.00 }
+              - column: { name: description, value: "Великі доми Вестеросу борються за Залізний трон, а з півночі насувається зима." }
+              - column: { name: cover_image, value: "/covers/fantasy-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Відьмак. Останнє бажання" }
+              - column: { name: author, value: "Анджей Сапковський" }
+              - column: { name: isbn, value: "9799900004034" }
+              - column: { name: price, valueNumeric: 340.00 }
+              - column: { name: description, value: "Збірка оповідань про Ґеральта з Ривії, мисливця на чудовиськ." }
+              - column: { name: cover_image, value: "/covers/fantasy-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Гаррі Поттер і філософський камінь" }
+              - column: { name: author, value: "Дж. К. Ролінґ" }
+              - column: { name: isbn, value: "9799900004041" }
+              - column: { name: price, valueNumeric: 450.00 }
+              - column: { name: description, value: "Хлопчик дізнається, що він чарівник, і вирушає навчатися до Гоґвортсу." }
+              - column: { name: cover_image, value: "/covers/fantasy-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Ім'я вітру" }
+              - column: { name: author, value: "Патрік Ротфусс" }
+              - column: { name: isbn, value: "9799900004058" }
+              - column: { name: price, valueNumeric: 520.00 }
+              - column: { name: description, value: "Квоут розповідає історію свого життя: від мандрівного актора до легенди." }
+              - column: { name: cover_image, value: "/covers/fantasy-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Американські боги" }
+              - column: { name: author, value: "Ніл Ґейман" }
+              - column: { name: isbn, value: "9799900004065" }
+              - column: { name: price, valueNumeric: 420.00 }
+              - column: { name: description, value: "Старі боги, яких привезли до Америки іммігранти, воюють з новими богами сучасності." }
+              - column: { name: cover_image, value: "/covers/fantasy-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Дюна" }
+              - column: { name: author, value: "Френк Герберт" }
+              - column: { name: isbn, value: "9799900005017" }
+              - column: { name: price, valueNumeric: 590.00 }
+              - column: { name: description, value: "На пустельній планеті Арракіс юний Пол Атрід стає частиною великої боротьби за спецію." }
+              - column: { name: cover_image, value: "/covers/scifi-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Фундація" }
+              - column: { name: author, value: "Айзек Азімов" }
+              - column: { name: isbn, value: "9799900005024" }
+              - column: { name: price, valueNumeric: 360.00 }
+              - column: { name: description, value: "Учений передбачає падіння Галактичної імперії і створює план порятунку знань." }
+              - column: { name: cover_image, value: "/covers/scifi-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "451° за Фаренгейтом" }
+              - column: { name: author, value: "Рей Бредбері" }
+              - column: { name: isbn, value: "9799900005031" }
+              - column: { name: price, valueNumeric: 240.00 }
+              - column: { name: description, value: "У світі, де книжки спалюють, пожежник Монтеґ починає сумніватися." }
+              - column: { name: cover_image, value: "/covers/scifi-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Марсіянин" }
+              - column: { name: author, value: "Енді Вейр" }
+              - column: { name: isbn, value: "9799900005048" }
+              - column: { name: price, valueNumeric: 390.00 }
+              - column: { name: description, value: "Астронавта випадково залишають на Марсі, і він має вижити, покладаючись на науку." }
+              - column: { name: cover_image, value: "/covers/scifi-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Соляріс" }
+              - column: { name: author, value: "Станіслав Лем" }
+              - column: { name: isbn, value: "9799900005055" }
+              - column: { name: price, valueNumeric: 310.00 }
+              - column: { name: description, value: "Науковці на станції біля загадкової планети-океану стикаються з власними спогадами." }
+              - column: { name: cover_image, value: "/covers/scifi-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Нейромант" }
+              - column: { name: author, value: "Вільям Гібсон" }
+              - column: { name: isbn, value: "9799900005062" }
+              - column: { name: price, valueNumeric: 350.00 }
+              - column: { name: description, value: "Хакер Кейс береться за небезпечну роботу в кіберпросторі. Роман, що започаткував кіберпанк." }
+              - column: { name: cover_image, value: "/covers/scifi-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Убивство у «Східному експресі»" }
+              - column: { name: author, value: "Агата Крісті" }
+              - column: { name: isbn, value: "9799900006014" }
+              - column: { name: price, valueNumeric: 260.00 }
+              - column: { name: description, value: "Еркюль Пуаро розслідує вбивство в потязі, заблокованому сніговими заметами." }
+              - column: { name: cover_image, value: "/covers/crime-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Собака Баскервілів" }
+              - column: { name: author, value: "Артур Конан Дойл" }
+              - column: { name: isbn, value: "9799900006021" }
+              - column: { name: price, valueNumeric: 230.00 }
+              - column: { name: description, value: "Шерлок Голмс і доктор Ватсон розплутують легенду про пекельного пса." }
+              - column: { name: cover_image, value: "/covers/crime-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Дівчина з татуюванням дракона" }
+              - column: { name: author, value: "Стіг Ларссон" }
+              - column: { name: isbn, value: "9799900006038" }
+              - column: { name: price, valueNumeric: 420.00 }
+              - column: { name: description, value: "Журналіст і хакерка шукають дівчину, що зникла сорок років тому." }
+              - column: { name: cover_image, value: "/covers/crime-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Код да Вінчі" }
+              - column: { name: author, value: "Ден Браун" }
+              - column: { name: isbn, value: "9799900006045" }
+              - column: { name: price, valueNumeric: 380.00 }
+              - column: { name: description, value: "Професор Ленґдон розгадує шифри, заховані у творах Леонардо да Вінчі." }
+              - column: { name: cover_image, value: "/covers/crime-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Мовчання ягнят" }
+              - column: { name: author, value: "Томас Гарріс" }
+              - column: { name: isbn, value: "9799900006052" }
+              - column: { name: price, valueNumeric: 330.00 }
+              - column: { name: description, value: "Агентка ФБР звертається по допомогу до геніального і небезпечного Ганнібала Лектера." }
+              - column: { name: cover_image, value: "/covers/crime-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Зникла" }
+              - column: { name: author, value: "Ґіліан Флінн" }
+              - column: { name: isbn, value: "9799900006069" }
+              - column: { name: price, valueNumeric: 360.00 }
+              - column: { name: description, value: "У день п'ятої річниці весілля зникає Емі, і всі підозри падають на чоловіка." }
+              - column: { name: cover_image, value: "/covers/crime-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Чорна рада" }
+              - column: { name: author, value: "Пантелеймон Куліш" }
+              - column: { name: isbn, value: "9799900007011" }
+              - column: { name: price, valueNumeric: 240.00 }
+              - column: { name: description, value: "Перший український історичний роман про боротьбу за гетьманську булаву 1663 року." }
+              - column: { name: cover_image, value: "/covers/history-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Чорний ворон" }
+              - column: { name: author, value: "Василь Шкляр" }
+              - column: { name: isbn, value: "9799900007028" }
+              - column: { name: price, valueNumeric: 340.00 }
+              - column: { name: description, value: "Роман про повстанців Холодного Яру, які до останнього боронили свою землю." }
+              - column: { name: cover_image, value: "/covers/history-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Диво" }
+              - column: { name: author, value: "Павло Загребельний" }
+              - column: { name: isbn, value: "9799900007035" }
+              - column: { name: price, valueNumeric: 450.00 }
+              - column: { name: description, value: "Історія Софії Київської: від часів Ярослава Мудрого до XX століття." }
+              - column: { name: cover_image, value: "/covers/history-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Сестри Річинські" }
+              - column: { name: author, value: "Ірина Вільде" }
+              - column: { name: isbn, value: "9799900007042" }
+              - column: { name: price, valueNumeric: 480.00 }
+              - column: { name: description, value: "Сага про п'ять сестер зі збіднілої родини священника в Галичині 1930-х." }
+              - column: { name: cover_image, value: "/covers/history-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Ім'я рози" }
+              - column: { name: author, value: "Умберто Еко" }
+              - column: { name: isbn, value: "9799900007059" }
+              - column: { name: price, valueNumeric: 470.00 }
+              - column: { name: description, value: "Чернець Вільгельм розслідує загадкові смерті в середньовічному абатстві." }
+              - column: { name: cover_image, value: "/covers/history-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Книжкова злодійка" }
+              - column: { name: author, value: "Маркус Зузак" }
+              - column: { name: isbn, value: "9799900007066" }
+              - column: { name: price, valueNumeric: 410.00 }
+              - column: { name: description, value: "Дівчинка в нацистській Німеччині краде книжки і ділиться ними з іншими." }
+              - column: { name: cover_image, value: "/covers/history-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Sapiens. Людина розумна" }
+              - column: { name: author, value: "Юваль Ной Харарі" }
+              - column: { name: isbn, value: "9799900008018" }
+              - column: { name: price, valueNumeric: 490.00 }
+              - column: { name: description, value: "Коротка історія людства: від кочових мисливців до сучасних цивілізацій." }
+              - column: { name: cover_image, value: "/covers/nonfiction-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Брама Європи" }
+              - column: { name: author, value: "Сергій Плохій" }
+              - column: { name: isbn, value: "9799900008025" }
+              - column: { name: price, valueNumeric: 430.00 }
+              - column: { name: description, value: "Історія України від давніх часів до сьогодення, розказана для широкого читача." }
+              - column: { name: cover_image, value: "/covers/nonfiction-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Зброя, мікроби і сталь" }
+              - column: { name: author, value: "Джаред Даймонд" }
+              - column: { name: isbn, value: "9799900008032" }
+              - column: { name: price, valueNumeric: 520.00 }
+              - column: { name: description, value: "Чому одні суспільства підкорили інших: географія, хвороби і технології." }
+              - column: { name: cover_image, value: "/covers/nonfiction-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Коротка історія часу" }
+              - column: { name: author, value: "Стівен Гокінг" }
+              - column: { name: isbn, value: "9799900008049" }
+              - column: { name: price, valueNumeric: 290.00 }
+              - column: { name: description, value: "Від Великого вибуху до чорних дір: космологія простими словами." }
+              - column: { name: cover_image, value: "/covers/nonfiction-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Червоний голод" }
+              - column: { name: author, value: "Енн Епплбом" }
+              - column: { name: isbn, value: "9799900008056" }
+              - column: { name: price, valueNumeric: 540.00 }
+              - column: { name: description, value: "Дослідження Голодомору: як радянська влада організувала голод в Україні." }
+              - column: { name: cover_image, value: "/covers/nonfiction-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Фактологія" }
+              - column: { name: author, value: "Ганс Рослінг" }
+              - column: { name: isbn, value: "9799900008063" }
+              - column: { name: price, valueNumeric: 380.00 }
+              - column: { name: description, value: "Десять причин, чому ми помиляємось щодо світу, і чому все краще, ніж здається." }
+              - column: { name: cover_image, value: "/covers/nonfiction-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Атомні звички" }
+              - column: { name: author, value: "Джеймс Клір" }
+              - column: { name: isbn, value: "9799900009015" }
+              - column: { name: price, valueNumeric: 360.00 }
+              - column: { name: description, value: "Як маленькі щоденні зміни приводять до великих результатів." }
+              - column: { name: cover_image, value: "/covers/psychology-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Мислення швидке й повільне" }
+              - column: { name: author, value: "Деніел Канеман" }
+              - column: { name: isbn, value: "9799900009022" }
+              - column: { name: price, valueNumeric: 480.00 }
+              - column: { name: description, value: "Дві системи мислення і помилки, яких ми припускаємося, ухвалюючи рішення." }
+              - column: { name: cover_image, value: "/covers/psychology-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Людина в пошуках справжнього сенсу" }
+              - column: { name: author, value: "Віктор Франкл" }
+              - column: { name: isbn, value: "9799900009039" }
+              - column: { name: price, valueNumeric: 240.00 }
+              - column: { name: description, value: "Психолог, що пережив концтабір, про те, як сенс допомагає вистояти." }
+              - column: { name: cover_image, value: "/covers/psychology-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "7 звичок надзвичайно ефективних людей" }
+              - column: { name: author, value: "Стівен Кові" }
+              - column: { name: isbn, value: "9799900009046" }
+              - column: { name: price, valueNumeric: 390.00 }
+              - column: { name: description, value: "Класика про принципи особистої та професійної ефективності." }
+              - column: { name: cover_image, value: "/covers/psychology-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Тонке мистецтво пофігізму" }
+              - column: { name: author, value: "Марк Менсон" }
+              - column: { name: isbn, value: "9799900009053" }
+              - column: { name: price, valueNumeric: 300.00 }
+              - column: { name: description, value: "Чесна і зухвала книжка про те, як обирати, що для тебе справді важливо." }
+              - column: { name: cover_image, value: "/covers/psychology-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Емоційний інтелект" }
+              - column: { name: author, value: "Деніел Гоулман" }
+              - column: { name: isbn, value: "9799900009060" }
+              - column: { name: price, valueNumeric: 370.00 }
+              - column: { name: description, value: "Чому вміння розуміти емоції важить не менше, ніж IQ." }
+              - column: { name: cover_image, value: "/covers/psychology-6.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Маленький принц" }
+              - column: { name: author, value: "Антуан де Сент-Екзюпері" }
+              - column: { name: isbn, value: "9799900010011" }
+              - column: { name: price, valueNumeric: 220.00 }
+              - column: { name: description, value: "Казка-притча про хлопчика з далекої планети, дружбу і відповідальність." }
+              - column: { name: cover_image, value: "/covers/kids-1.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Аліса в Країні Див" }
+              - column: { name: author, value: "Льюїс Керролл" }
+              - column: { name: isbn, value: "9799900010028" }
+              - column: { name: price, valueNumeric: 260.00 }
+              - column: { name: description, value: "Аліса падає в кролячу нору й потрапляє у світ дивовижних пригод." }
+              - column: { name: cover_image, value: "/covers/kids-2.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Чарлі і шоколадна фабрика" }
+              - column: { name: author, value: "Роальд Дал" }
+              - column: { name: isbn, value: "9799900010035" }
+              - column: { name: price, valueNumeric: 280.00 }
+              - column: { name: description, value: "Хлопчик Чарлі виграє золотий квиток на найчарівнішу фабрику у світі." }
+              - column: { name: cover_image, value: "/covers/kids-3.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Тореадори з Васюківки" }
+              - column: { name: author, value: "Всеволод Нестайко" }
+              - column: { name: isbn, value: "9799900010042" }
+              - column: { name: price, valueNumeric: 300.00 }
+              - column: { name: description, value: "Смішні пригоди нерозлучних друзів Яви і Павлуші." }
+              - column: { name: cover_image, value: "/covers/kids-4.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Вінні-Пух" }
+              - column: { name: author, value: "Алан Александр Мілн" }
+              - column: { name: isbn, value: "9799900010059" }
+              - column: { name: price, valueNumeric: 270.00 }
+              - column: { name: description, value: "Історії про ведмедика з тирсою в голові та його друзів зі Столітнього лісу." }
+              - column: { name: cover_image, value: "/covers/kids-5.svg" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "Незвичайні пригоди Алі в країні Недоладії" }
+              - column: { name: author, value: "Галина Малик" }
+              - column: { name: isbn, value: "9799900010066" }
+              - column: { name: price, valueNumeric: 250.00 }
+              - column: { name: description, value: "Дівчинка Аля потрапляє в країну, де все робиться абияк." }
+              - column: { name: cover_image, value: "/covers/kids-6.svg" }
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Українська класика' WHERE b.isbn IN ('9799900001019', '9799900001026', '9799900001033', '9799900001040', '9799900001057', '9799900001064')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Сучасна українська проза' WHERE b.isbn IN ('9799900002016', '9799900002023', '9799900002030', '9799900002047', '9799900002054', '9799900002061')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Поезія' WHERE b.isbn IN ('9799900003013', '9799900003020', '9799900003037', '9799900003044', '9799900003051', '9799900003068')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Фентезі' WHERE b.isbn IN ('9799900004010', '9799900004027', '9799900004034', '9799900004041', '9799900004058', '9799900004065')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Наукова фантастика' WHERE b.isbn IN ('9799900005017', '9799900005024', '9799900005031', '9799900005048', '9799900005055', '9799900005062')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Детективи і трилери' WHERE b.isbn IN ('9799900006014', '9799900006021', '9799900006038', '9799900006045', '9799900006052', '9799900006069')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Історичний роман' WHERE b.isbn IN ('9799900007011', '9799900007028', '9799900007035', '9799900007042', '9799900007059', '9799900007066')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Нон-фікшн' WHERE b.isbn IN ('9799900008018', '9799900008025', '9799900008032', '9799900008049', '9799900008056', '9799900008063')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Психологія і саморозвиток' WHERE b.isbn IN ('9799900009015', '9799900009022', '9799900009039', '9799900009046', '9799900009053', '9799900009060')"
+        - sql:
+            sql: "INSERT INTO book_category (book_id, category_id) SELECT b.id, c.id FROM books b JOIN categories c ON c.name = 'Дитячі книги' WHERE b.isbn IN ('9799900010011', '9799900010028', '9799900010035', '9799900010042', '9799900010059', '9799900010066')"
+      rollback:
+        - sql:
+            sql: "DELETE bc FROM book_category bc JOIN books b ON b.id = bc.book_id WHERE b.isbn IN ('9799900001019', '9799900001026', '9799900001033', '9799900001040', '9799900001057', '9799900001064', '9799900002016', '9799900002023', '9799900002030', '9799900002047', '9799900002054', '9799900002061', '9799900003013', '9799900003020', '9799900003037', '9799900003044', '9799900003051', '9799900003068', '9799900004010', '9799900004027', '9799900004034', '9799900004041', '9799900004058', '9799900004065', '9799900005017', '9799900005024', '9799900005031', '9799900005048', '9799900005055', '9799900005062', '9799900006014', '9799900006021', '9799900006038', '9799900006045', '9799900006052', '9799900006069', '9799900007011', '9799900007028', '9799900007035', '9799900007042', '9799900007059', '9799900007066', '9799900008018', '9799900008025', '9799900008032', '9799900008049', '9799900008056', '9799900008063', '9799900009015', '9799900009022', '9799900009039', '9799900009046', '9799900009053', '9799900009060', '9799900010011', '9799900010028', '9799900010035', '9799900010042', '9799900010059', '9799900010066')"
+        - sql:
+            sql: "DELETE FROM books WHERE isbn IN ('9799900001019', '9799900001026', '9799900001033', '9799900001040', '9799900001057', '9799900001064', '9799900002016', '9799900002023', '9799900002030', '9799900002047', '9799900002054', '9799900002061', '9799900003013', '9799900003020', '9799900003037', '9799900003044', '9799900003051', '9799900003068', '9799900004010', '9799900004027', '9799900004034', '9799900004041', '9799900004058', '9799900004065', '9799900005017', '9799900005024', '9799900005031', '9799900005048', '9799900005055', '9799900005062', '9799900006014', '9799900006021', '9799900006038', '9799900006045', '9799900006052', '9799900006069', '9799900007011', '9799900007028', '9799900007035', '9799900007042', '9799900007059', '9799900007066', '9799900008018', '9799900008025', '9799900008032', '9799900008049', '9799900008056', '9799900008063', '9799900009015', '9799900009022', '9799900009039', '9799900009046', '9799900009053', '9799900009060', '9799900010011', '9799900010028', '9799900010035', '9799900010042', '9799900010059', '9799900010066')"
+        - sql:
+            sql: "DELETE FROM categories WHERE name IN ('Українська класика', 'Сучасна українська проза', 'Поезія', 'Фентезі', 'Наукова фантастика', 'Детективи і трилери', 'Історичний роман', 'Нон-фікшн', 'Психологія і саморозвиток', 'Дитячі книги')"
