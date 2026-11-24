@@ -4,8 +4,8 @@ import com.example.basicbookstoreprojectnew.dto.UserLoginRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserLoginResponseDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationRequestDto;
 import com.example.basicbookstoreprojectnew.dto.UserRegistrationResponseDto;
+import com.example.basicbookstoreprojectnew.exception.InvalidCredentialsException;
 import com.example.basicbookstoreprojectnew.exception.RegistrationException;
-import com.example.basicbookstoreprojectnew.exception.UserNotFoundException;
 import com.example.basicbookstoreprojectnew.mapper.UserMapper;
 import com.example.basicbookstoreprojectnew.model.Role;
 import com.example.basicbookstoreprojectnew.model.RoleName;
@@ -64,12 +64,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserLoginResponseDto login(UserLoginRequestDto request) {
 
+        // Unknown email and wrong password give the same 401:
+        // nobody can probe which emails are registered.
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new UserNotFoundException(
-                        "User not found with email!: " + request.email()));
+                .orElseThrow(InvalidCredentialsException::new);
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new RuntimeException("Invalid email or password! ");
+            throw new InvalidCredentialsException();
         }
 
         List<String> roles = user.getRoles().stream()
