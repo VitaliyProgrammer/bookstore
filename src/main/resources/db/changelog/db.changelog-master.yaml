@@ -23,3 +23,5 @@ databaseChangeLog:
       file: db/changelog/changes/create_order_items.yaml
   - include:
       file: db/changelog/changes/seed_demo_books.yaml
+  - include:
+      file: db/changelog/changes/update_demo_book_descriptions.yaml
